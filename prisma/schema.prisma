@@ -1,0 +1,145 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String    @id @default(uuid())
+  name String
+  surname String
+  patronymic String
+  phoneNumber String @map("phone_number")
+  dateOfReceipt DateTime @map("date_of_receipt")
+  login String
+  group Int
+    organization Organizations @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+
+
+  
+  // specialization
+  email String @unique
+  password String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  roles Role[]
+  token Token[]
+  portfolio Portfolio []
+  lesson Lessons[]
+  statement Statement[]
+  credit Credits[]
+  @@map("users")
+}
+
+model Token {
+  token String @unique
+  exp DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  userAgent String @map("user_agent")
+  @@map("tokens")
+}
+
+model Organizations{
+  id    String    @id @default(uuid())
+  name String
+  description String
+  user User[]
+  @@map("organizators")
+}
+
+model Categories{
+  id    String    @id @default(uuid())
+  name String
+  portfolio Portfolio []
+  @@map("categories")
+}
+model Portfolio{
+ id    String    @id @default(uuid())
+ category Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+ categoryId String
+ year DateTime
+ Name String
+ Photo String
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+    @@map("portfolio")
+}
+model Lessons{
+  id    String    @id @default(uuid())
+  Name String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  group Int
+  statement Statement[]
+  credit Credits[]
+    @@map("lessons")
+}
+model Statement{
+  id    String    @id @default(uuid())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  lesson Lessons @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId String
+  quater Int
+  mark Marks[]
+    @@map("statement")
+}
+
+model Credits{
+   id    String    @id @default(uuid())
+  lesson Lessons @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  deadLine DateTime
+  date DateTime
+  office Int
+    @@map("credits")
+}
+
+model Marks{
+  id    String    @id @default(uuid())
+  statement Statement @relation(fields: [statementId], references: [id], onDelete: Cascade)
+  statementId String
+  mark String
+  date DateTime
+    @@map("marks")
+}
+
+model Specializations{
+  id    String    @id @default(uuid())
+  name String
+  description String
+  future Future[]
+  @@map("specializations")
+}
+model Future{
+  id    String    @id @default(uuid())
+  name String
+  place String
+  
+  cost Int
+  description String
+  phone String
+  specializationId String
+  specialization Specializations @relation(fields: [specializationId], references: [id], onDelete: Cascade)
+  @@map("future")
+}
+
+enum Role {
+  ADMIN
+  
+  STUDENT
+  TEACHER
+}
