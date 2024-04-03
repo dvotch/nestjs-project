@@ -39,7 +39,7 @@ export class UserController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles(Role.ADMIN)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Get()
     me(@CurrentUser() user: JwtPayload) {
         return user;
