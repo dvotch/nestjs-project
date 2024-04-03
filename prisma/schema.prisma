@@ -21,18 +21,17 @@ model User {
   phoneNumber String @map("phone_number")
   dateOfReceipt DateTime @map("date_of_receipt")
   login String
-  group Int
-    organization Organizations @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  organizationId String
-
-
-  
-  // specialization
-  email String @unique
   password String
+  email String @unique
+  group Int
+  avatar Bytes
+  organization Organizations? @relation(fields: [organizationId], references: [id], onDelete:  SetNull)
+  organizationId String?
+  specialization Specializations @relation(fields: [specializationId], references: [id]) 
+  specializationId String 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  roles Role[]
+  roles Role[] @default([STUDENT])
   token Token[]
   portfolio Portfolio []
   lesson Lessons[]
@@ -54,6 +53,7 @@ model Organizations{
   id    String    @id @default(uuid())
   name String
   description String
+  logo Bytes
   user User[]
   @@map("organizators")
 }
@@ -65,25 +65,25 @@ model Categories{
   @@map("categories")
 }
 model Portfolio{
- id    String    @id @default(uuid())
- category Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
- categoryId String
- year DateTime
- Name String
- Photo String
- user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id    String    @id @default(uuid())
+  category Categories @relation(fields: [categoryId], references: [id])
+  categoryId String
+  year Int
+  name String
+  photo Bytes
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
-    @@map("portfolio")
+  @@map("portfolio")
 }
 model Lessons{
   id    String    @id @default(uuid())
-  Name String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name String
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
   userId String
   group Int
   statement Statement[]
   credit Credits[]
-    @@map("lessons")
+  @@map("lessons")
 }
 model Statement{
   id    String    @id @default(uuid())
@@ -93,11 +93,11 @@ model Statement{
   lessonId String
   quater Int
   mark Marks[]
-    @@map("statement")
+  @@map("statement")
 }
 
 model Credits{
-   id    String    @id @default(uuid())
+  id    String    @id @default(uuid())
   lesson Lessons @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   lessonId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -105,16 +105,16 @@ model Credits{
   deadLine DateTime
   date DateTime
   office Int
-    @@map("credits")
+  @@map("credits")
 }
 
 model Marks{
   id    String    @id @default(uuid())
   statement Statement @relation(fields: [statementId], references: [id], onDelete: Cascade)
   statementId String
-  mark String
+  mark Int
   date DateTime
-    @@map("marks")
+  @@map("marks")
 }
 
 model Specializations{
@@ -122,24 +122,26 @@ model Specializations{
   name String
   description String
   future Future[]
+  user User[]
   @@map("specializations")
 }
 model Future{
   id    String    @id @default(uuid())
   name String
   place String
-  
   cost Int
   description String
   phone String
+  url String
+  photo Bytes
+  specialization Specializations @relation(fields: [specializationId], references: [id], onDelete: NoAction)
   specializationId String
-  specialization Specializations @relation(fields: [specializationId], references: [id], onDelete: Cascade)
   @@map("future")
 }
 
 enum Role {
-  ADMIN
-  
-  STUDENT
-  TEACHER
+  RESOURCES_DEPARTMENT @map("resources_department")
+  STUDENT @map("student")
+  TEACHER @map("teacher")
+  @@map("role")
 }
