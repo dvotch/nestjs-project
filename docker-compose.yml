@@ -5,12 +5,27 @@ services:
         image: postgres
         restart: always
         ports:
-            - 5432:5432
+            - 127.0.0.1:5432:5432
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=postgres
         volumes:
             - db-data:/var/lib/postgresql/data
+    db_pgadmin:
+        container_name: db_pgadmin
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: postgres@mail.ru
+            PGADMIN_DEFAULT_PASSWORD: postgres
+            PGADMIN_DEFAULT_SERVER_MODE: 'False'
+        volumes:
+            - pgadmin:/var/www/db_pgadmin/docker-volumes/pgadmin
+        ports:
+            - 127.0.0.1:5050:80
+        restart: unless-stopped
+
 volumes:
     db-data:
+    postgres:
+    pgadmin:
