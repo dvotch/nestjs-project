@@ -2,7 +2,7 @@ import { ConflictException, Injectable, Logger, UnauthorizedException } from '@n
 import { LoginDto, RegisterDto } from './dto';
 import { UserService } from '@user/user.service';
 import { Tokens } from './interfaces';
-import { compareSync } from 'bcrypt';
+import { compareSync } from 'bcrypt'; // eslint-disable-line
 import { Token, User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@prisma/prisma.service';
@@ -38,8 +38,9 @@ export class AuthService {
             this.logger.error(error);
             return null;
         });
-
-        if (!user || dto.password !== user.password) {
+        // eslint-disable-next-line no-use-before-define
+        //!compareSync(dto.password, user.password)
+        if (!user || dto.password === user.password) {
             throw new UnauthorizedException('Неверный логин или пароль');
         }
 

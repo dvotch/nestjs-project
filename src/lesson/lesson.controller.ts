@@ -1,4 +1,4 @@
-import { Delete, Get, Post, Controller } from '@nestjs/common';
+import { Get, Controller } from '@nestjs/common';
 
 import { LessonService } from './lesson.service';
 import { JwtPayload } from '@auth/interfaces';

@@ -6,10 +6,8 @@ import {
     Get,
     HttpStatus,
     Post,
-    Req,
     Res,
     UnauthorizedException,
-    UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import { LoginDto, RegisterDto } from './dto';
