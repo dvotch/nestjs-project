@@ -7,6 +7,6 @@ import { PrismaService } from '@prisma/prisma.service';
 export class LessonService {
     constructor(private readonly prismaService: PrismaService) {}
     findLesson(user: JwtPayload) {
-        this.prismaService.statement.findMany({ where: { userId: user.id } });
+        return this.prismaService.statement.findMany({ where: { userId: user.id } });
     }
 }

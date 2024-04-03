@@ -39,7 +39,7 @@ export class AuthService {
             return null;
         });
 
-        if (!user || !compareSync(dto.password, user.password)) {
+        if (!user || dto.password !== user.password) {
             throw new UnauthorizedException('Неверный логин или пароль');
         }
 

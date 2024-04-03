@@ -3,7 +3,7 @@ import { convertToSecondsUtil } from '@common/utils';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Role, User } from '@prisma/client';
+import { role, User } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
 import { genSaltSync, hashSync } from 'bcrypt';
 import { Cache } from 'cache-manager';
@@ -22,7 +22,16 @@ export class UserService {
             data: {
                 email: user.email,
                 password: hashedPassword,
-                roles: ['STUDENT'],
+                roles: ['student'],
+                avatar: JSON.parse(''),
+                dateOfReceipt: new Date(),
+                group: 205,
+                login: '123',
+                name: '123',
+                patronymic: '123',
+                phoneNumber: '123',
+                surname: '321',
+                specializationId: '1',
             },
         });
     }
@@ -49,7 +58,7 @@ export class UserService {
     }
 
     async delete(id: string, user: JwtPayload) {
-        if (user.id !== id && !user.roles.includes(Role.ADMIN)) {
+        if (user.id !== id && !user.roles.includes(role.resources_department)) {
             throw new ForbiddenException();
         }
         await Promise.all([this.cacheManager.del(id), this.cacheManager.del(user.email)]);
