@@ -22,7 +22,7 @@ export class UserResponse implements User {
     createdAt: Date;
 
     updatedAt: Date;
-    roles: $Enums.role[];
+    roles: $Enums.Role[];
 
     constructor(user: User) {
         Object.assign(this, user);

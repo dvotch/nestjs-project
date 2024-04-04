@@ -17,14 +17,14 @@ model User {
   id    String    @id @default(uuid())
   name String
   surname String
-  patronymic String
+  patronymic String?
   phoneNumber String @map("phone_number")
   dateOfReceipt DateTime @map("date_of_receipt")
   login String
   password String
   email String @unique
   group Int
-  avatar Bytes
+  avatar Bytes?
   organization Organizations? @relation(fields: [organizationId], references: [id], onDelete:  SetNull)
   organizationId String?
   specialization Specializations @relation(fields: [specializationId], references: [id]) 
