@@ -16,16 +16,20 @@ import { CurrentUser, Roles } from '@common/decorators';
 import { JwtPayload } from '@auth/interfaces';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Role } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
+
     @UseInterceptors(ClassSerializerInterceptor)
     @Post()
     async createUser(@Body() dto) {
         const user = await this.userService.save(dto);
         return new UserResponse(user);
     }
+
     @UseInterceptors(ClassSerializerInterceptor)
     @Get(':idOrEmail')
     async findOneUser(@Param('idOrEmail') idOrEmail: string) {

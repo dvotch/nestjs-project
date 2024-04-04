@@ -17,10 +17,12 @@ import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { Cookie, Public, UserAgent } from '@common/decorators';
 import { UserResponse } from '@user/responses';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 const REFRESH_TOKEN = 'refreshtoken';
 
 @Public()
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     constructor(
@@ -28,6 +30,10 @@ export class AuthController {
         private readonly configService: ConfigService,
     ) {}
 
+    @ApiCreatedResponse({
+        description: 'Пользователь создан',
+        type: UserResponse,
+    })
     @UseInterceptors(ClassSerializerInterceptor)
     @Post('register')
     async register(@Body() dto: RegisterDto) {

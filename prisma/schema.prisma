@@ -20,7 +20,6 @@ model User {
   patronymic String?
   phoneNumber String @map("phone_number")
   dateOfReceipt DateTime @map("date_of_receipt")
-  login String
   password String
   email String @unique
   group Int
