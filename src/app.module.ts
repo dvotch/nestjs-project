@@ -6,9 +6,19 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { StatementModule } from './statement/statement.module';
+import { SpecializationsController } from './specializations/specializations.controller';
+import { SpecializationsModule } from './specializations/specializations.module';
+import { SpecializationsService } from './specializations/specializations.service';
 
 @Module({
-    imports: [UserModule, PrismaModule, AuthModule, ConfigModule.forRoot({ isGlobal: true }), StatementModule],
+    imports: [
+        UserModule,
+        PrismaModule,
+        AuthModule,
+        ConfigModule.forRoot({ isGlobal: true }),
+        StatementModule,
+        SpecializationsModule,
+    ],
     providers: [
         {
             provide: APP_GUARD,
