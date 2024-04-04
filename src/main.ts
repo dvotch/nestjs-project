@@ -12,6 +12,7 @@ async function bootstrap() {
         .setTitle('Personal cabinet')
         .setDescription('The personal cabinet API description')
         .setVersion('1.0')
+        .addBearerAuth()
         .build();
 
     const options: SwaggerDocumentOptions = {
