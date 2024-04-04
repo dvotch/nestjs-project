@@ -8,7 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@prisma/prisma.service';
 import { v4 } from 'uuid';
 import { add } from 'date-fns';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Injectable()
 export class AuthService {
     private readonly logger = new Logger(AuthService.name);
