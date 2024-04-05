@@ -9,6 +9,7 @@ import { StatementModule } from './statement/statement.module';
 import { SpecializationsController } from './specializations/specializations.controller';
 import { SpecializationsModule } from './specializations/specializations.module';
 import { SpecializationsService } from './specializations/specializations.service';
+import { CategoryModule } from './category/category.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { SpecializationsService } from './specializations/specializations.servic
         ConfigModule.forRoot({ isGlobal: true }),
         StatementModule,
         SpecializationsModule,
+        CategoryModule,
     ],
     providers: [
         {
