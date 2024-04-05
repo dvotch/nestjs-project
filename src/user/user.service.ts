@@ -7,6 +7,7 @@ import { Role, User } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
 import { genSaltSync, hashSync } from 'bcrypt';
 import { Cache } from 'cache-manager';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -16,22 +17,21 @@ export class UserService {
         private readonly configService: ConfigService,
     ) {}
 
-    save(user: Partial<User>) {
-        const hashedPassword = this.hashPassword(user.password);
+    save(dto: CreateUserDto) {
+        const hashedPassword = this.hashPassword(dto.password);
         return this.prismaService.user.create({
             data: {
-                email: user.email,
+                email: dto.email,
                 password: hashedPassword,
-                roles: ['STUDENT'],
-                avatar: JSON.parse(''),
+                roles: dto.roles,
+                avatar: dto.avatar,
                 dateOfReceipt: new Date(),
-                group: 205,
-                login: '123',
-                name: '123',
-                patronymic: '123',
-                phoneNumber: '123',
-                surname: '321',
-                specializationId: '1',
+                group: dto.group,
+                name: dto.name,
+                patronymic: dto.patronymic,
+                phoneNumber: dto.phoneNumber,
+                surname: dto.surname,
+                specializationId: dto.specializationId,
             },
         });
     }
@@ -70,5 +70,9 @@ export class UserService {
 
     private hashPassword(password: string) {
         return hashSync(password, genSaltSync(10));
+    }
+
+    getAll() {
+        return this.prismaService.user.findMany();
     }
 }
