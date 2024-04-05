@@ -6,10 +6,9 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { StatementModule } from './statement/statement.module';
-import { SpecializationsController } from './specializations/specializations.controller';
 import { SpecializationsModule } from './specializations/specializations.module';
-import { SpecializationsService } from './specializations/specializations.service';
 import { CategoryModule } from './category/category.module';
+import { PortfolioModule } from './portfolio/portfolio.module';
 
 @Module({
     imports: [
@@ -20,6 +19,7 @@ import { CategoryModule } from './category/category.module';
         StatementModule,
         SpecializationsModule,
         CategoryModule,
+        PortfolioModule,
     ],
     providers: [
         {

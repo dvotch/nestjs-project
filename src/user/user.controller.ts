@@ -12,20 +12,22 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserResponse } from './responses';
-import { CurrentUser, Roles } from '@common/decorators';
+import { CurrentUser, Public, Roles } from '@common/decorators';
 import { JwtPayload } from '@auth/interfaces';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Role } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @ApiTags('User')
+@Public()
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Post()
-    async createUser(@Body() dto) {
+    async createUser(@Body() dto: CreateUserDto) {
         const user = await this.userService.save(dto);
         return new UserResponse(user);
     }
@@ -44,8 +46,13 @@ export class UserController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
-    @Get()
+    @Get('/me')
     me(@CurrentUser() user: JwtPayload) {
         return user;
+    }
+
+    @Get()
+    getAll() {
+        return this.userService.getAll();
     }
 }

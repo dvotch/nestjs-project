@@ -11,10 +11,10 @@ export class CategoryService {
         return this.prismaService.categories.findMany();
     }
 
-    create(category: CreateCategoryDto) {
+    create(dto: CreateCategoryDto) {
         return this.prismaService.categories.create({
             data: {
-                name: category.name,
+                name: dto.name,
             },
         });
     }
@@ -27,10 +27,10 @@ export class CategoryService {
         });
     }
 
-    update(id: string, category: UpdateCategoryDto) {
+    update(id: string, dto: UpdateCategoryDto) {
         return this.prismaService.categories.update({
             where: { id },
-            data: { name: category.name },
+            data: { name: dto.name },
         });
     }
 }
