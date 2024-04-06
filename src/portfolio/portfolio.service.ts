@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreatePortfolioDto } from './dto/createPortfolio.dto';
 import { UpdateCategoryDto } from 'src/category/dto/updateCategory.dto';
-import { Portfolio } from '@prisma/client';
 
 @Injectable()
 export class PortfolioService {

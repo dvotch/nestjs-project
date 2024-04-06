@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Specializations } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreateSpecializationDto } from './dto';
 

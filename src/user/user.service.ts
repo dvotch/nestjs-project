@@ -20,19 +20,7 @@ export class UserService {
     save(dto: CreateUserDto) {
         const hashedPassword = this.hashPassword(dto.password);
         return this.prismaService.user.create({
-            data: {
-                email: dto.email,
-                password: hashedPassword,
-                roles: dto.roles,
-                avatar: dto.avatar,
-                dateOfReceipt: new Date(dto.dateOfReceipt),
-                group: dto.group,
-                name: dto.name,
-                patronymic: dto.patronymic,
-                phoneNumber: dto.phoneNumber,
-                surname: dto.surname,
-                specializationId: dto.specializationId,
-            },
+            data: { ...dto, dateOfReceipt: new Date(dto.dateOfReceipt), password: hashedPassword },
         });
     }
 

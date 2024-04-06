@@ -9,7 +9,6 @@ import { StatementModule } from './statement/statement.module';
 import { SpecializationsModule } from './specializations/specializations.module';
 import { CategoryModule } from './category/category.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
-import { OrganizationsController } from './organizations/organizations.controller';
 import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
