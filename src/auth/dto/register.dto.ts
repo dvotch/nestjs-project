@@ -2,7 +2,7 @@ import { IsPasswordMatchingConstraint } from '@common/decorators';
 import { ApiProperty } from '@nestjs/swagger';
 import { $Enums, User } from '@prisma/client';
 import { Exclude } from 'class-transformer';
-import { IsEmail, IsString, MinLength, Validate } from 'class-validator';
+import { IsArray, IsDate, IsEmail, IsNumber, IsString, MinLength, Validate, isArray } from 'class-validator';
 
 export class RegisterDto implements User {
     @Exclude()
@@ -14,6 +14,8 @@ export class RegisterDto implements User {
     @Exclude()
     updatedAt: Date;
 
+    @IsString()
+    @IsEmail()
     @ApiProperty({
         title: 'Почта пользователя',
         description: 'Почта пользователя',
@@ -21,9 +23,9 @@ export class RegisterDto implements User {
         required: true,
         type: 'string',
     })
-    @IsEmail()
     email: string;
 
+    @IsString()
     @ApiProperty({
         title: 'Пароль пользователя',
         description: 'Пароли должны совпадать',
@@ -31,10 +33,10 @@ export class RegisterDto implements User {
         required: true,
         type: 'string',
     })
-    @IsString()
     @MinLength(6)
     password: string;
 
+    @IsString()
     @ApiProperty({
         title: 'Повторить пароль для проверки',
         description: 'Пароли должны совпадать',
@@ -42,11 +44,11 @@ export class RegisterDto implements User {
         required: true,
         type: 'string',
     })
-    @IsString()
     @MinLength(6)
     @Validate(IsPasswordMatchingConstraint)
     passwordRepeat: string;
 
+    @IsString()
     @ApiProperty({
         description: 'Имя',
         type: 'string',
@@ -54,6 +56,8 @@ export class RegisterDto implements User {
         required: true,
     })
     name: string;
+
+    @IsString()
     @ApiProperty({
         description: 'Фамилия',
         type: 'Иванов',
@@ -61,6 +65,8 @@ export class RegisterDto implements User {
         required: true,
     })
     surname: string;
+
+    @IsString()
     @ApiProperty({
         description: 'Отчество',
         type: 'Иванович',
@@ -77,6 +83,7 @@ export class RegisterDto implements User {
     })
     avatar: Buffer;
 
+    @IsDate()
     @ApiProperty({
         description: 'Дата зачисления',
         type: 'Date',
@@ -85,6 +92,7 @@ export class RegisterDto implements User {
     })
     dateOfReceipt: Date;
 
+    @IsNumber()
     @ApiProperty({
         description: 'Номер группы',
         type: 'number',
@@ -93,6 +101,7 @@ export class RegisterDto implements User {
     })
     group: number;
 
+    @IsString()
     @ApiProperty({
         description: 'Номер телефона',
         type: 'string',
@@ -101,6 +110,7 @@ export class RegisterDto implements User {
     })
     phoneNumber: string;
 
+    @IsArray()
     @ApiProperty({
         description: 'Список ролей',
         type: 'array',
@@ -109,6 +119,7 @@ export class RegisterDto implements User {
     })
     roles: $Enums.Role[];
 
+    @IsString()
     @ApiProperty({
         description: 'Специальность',
         type: 'string',

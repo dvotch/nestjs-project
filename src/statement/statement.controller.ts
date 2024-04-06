@@ -1,9 +1,10 @@
-import { Get, Controller } from '@nestjs/common';
+import { Get, Controller, Post, Body, Put, Param, Delete } from '@nestjs/common';
 
 import { StatementService } from './statement.service';
 import { JwtPayload } from '@auth/interfaces';
 import { CurrentUser, Public } from '@common/decorators';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateStatementDto, UpdateStatementDto } from './dto';
 
 @Public()
 @ApiTags('Statement')
@@ -19,5 +20,20 @@ export class StatementController {
     @Get()
     getAll() {
         return this.statementService.getAll();
+    }
+
+    @Post()
+    createStatement(@Body() dto: CreateStatementDto) {
+        return this.statementService.create(dto);
+    }
+
+    @Put('/:id')
+    updateStatement(@Param('id') id: string, @Body() dto: UpdateStatementDto) {
+        return this.statementService.update(id, dto);
+    }
+
+    @Delete('/:id')
+    deleteStatement(@Param('id') id: string) {
+        return this.statementService.delete(id);
     }
 }
