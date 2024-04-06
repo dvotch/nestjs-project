@@ -5,7 +5,11 @@ import { PrismaService } from '@prisma/prisma.service';
 @Injectable()
 export class StatementService {
     constructor(private readonly prismaService: PrismaService) {}
-    findLesson(user: JwtPayload) {
+    getMyStatement(user: JwtPayload) {
         return this.prismaService.statement.findMany({ where: { userId: user.id } });
+    }
+
+    getAll() {
+        return this.prismaService.statement.findMany();
     }
 }
