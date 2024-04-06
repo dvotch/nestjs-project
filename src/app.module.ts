@@ -11,7 +11,6 @@ import { CategoryModule } from './category/category.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
 import { OrganizationsController } from './organizations/organizations.controller';
 import { OrganizationsModule } from './organizations/organizations.module';
-import { MarkModule } from './mark/mark.module';
 
 @Module({
     imports: [
@@ -24,7 +23,6 @@ import { MarkModule } from './mark/mark.module';
         CategoryModule,
         PortfolioModule,
         OrganizationsModule,
-        MarkModule,
     ],
     providers: [
         {
