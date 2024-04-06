@@ -29,7 +29,7 @@ export class PortfolioService {
             where: {
                 id,
             },
-        }) as Partial<Portfolio>;
+        });
 
         if (!portfolio) {
             throw new NotFoundException('Такой записи не существует');

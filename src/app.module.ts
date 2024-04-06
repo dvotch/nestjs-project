@@ -9,6 +9,9 @@ import { StatementModule } from './statement/statement.module';
 import { SpecializationsModule } from './specializations/specializations.module';
 import { CategoryModule } from './category/category.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
+import { OrganizationsController } from './organizations/organizations.controller';
+import { OrganizationsModule } from './organizations/organizations.module';
+import { MarkModule } from './mark/mark.module';
 
 @Module({
     imports: [
@@ -20,6 +23,8 @@ import { PortfolioModule } from './portfolio/portfolio.module';
         SpecializationsModule,
         CategoryModule,
         PortfolioModule,
+        OrganizationsModule,
+        MarkModule,
     ],
     providers: [
         {

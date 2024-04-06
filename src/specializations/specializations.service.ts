@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Specializations } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
+import { CreateSpecializationDto } from './dto';
 
 @Injectable()
 export class SpecializationsService {
@@ -8,15 +9,12 @@ export class SpecializationsService {
     findAllSpecializaztions() {
         return this.prismaService.specializations.findMany();
     }
-    deleteSpecializaztions(specialization: string) {
-        return this.prismaService.specializations.delete({ where: { id: specialization } });
+    deleteSpecializaztions(id: string) {
+        return this.prismaService.specializations.delete({ where: { id } });
     }
-    postSpecializations(specialization: Specializations) {
+    postSpecializations(dto: CreateSpecializationDto) {
         return this.prismaService.specializations.create({
-            data: {
-                name: specialization.name,
-                description: specialization.description,
-            },
+            data: { ...dto },
         });
     }
 }
