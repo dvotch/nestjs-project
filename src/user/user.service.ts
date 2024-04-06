@@ -25,7 +25,7 @@ export class UserService {
                 password: hashedPassword,
                 roles: dto.roles,
                 avatar: dto.avatar,
-                dateOfReceipt: new Date(),
+                dateOfReceipt: new Date(dto.dateOfReceipt),
                 group: dto.group,
                 name: dto.name,
                 patronymic: dto.patronymic,
