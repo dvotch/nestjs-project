@@ -4,7 +4,7 @@ import { IsEmail, IsString, MinLength } from 'class-validator';
 export class LoginDto {
     @ApiProperty({
         description: 'Почта пользователя',
-        examples: ['dev', 'adm'],
+        default: 'adm',
         required: true,
         type: 'string',
     })
@@ -13,7 +13,7 @@ export class LoginDto {
 
     @ApiProperty({
         description: 'Пароль пользователя',
-        examples: ['dev', 'adm'],
+        default: 'easypassword',
         required: true,
         type: 'string',
     })

@@ -7,30 +7,30 @@ export class CreateMarkDto implements Marks {
     @Exclude()
     id: string;
 
+    @IsDate()
     @ApiProperty({
         description: 'Дата выставления оценки',
         required: true,
         default: '02-04-2024',
         type: 'date',
     })
-    @IsDate()
     date: Date;
 
+    @IsNumber()
     @ApiProperty({
         description: 'Оценка',
         required: true,
         default: '5',
         type: 'number',
     })
-    @IsNumber()
     mark: number;
 
+    @IsUUID()
     @ApiProperty({
         description: 'Ссылка на ведомость',
         required: true,
         default: '5560baef-302a-4e8b-a101-758e45d31fd7',
         type: 'string',
     })
-    @IsUUID()
     statementId: string;
 }

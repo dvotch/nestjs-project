@@ -1,18 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Categories } from '@prisma/client';
 import { Exclude } from 'class-transformer';
+import { IsString } from 'class-validator';
 
 export class UpdateCategoryDto implements Categories {
-    @ApiProperty({
-        description: 'Идентификатор для поиска',
-        type: 'string',
-    })
     @Exclude()
     id: string;
 
+    @IsString()
     @ApiProperty({
         description: 'Название категории',
         type: 'string',
+        default: 'Волонтерство',
         required: true,
     })
     name: string;
