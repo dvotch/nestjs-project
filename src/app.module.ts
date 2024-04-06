@@ -30,6 +30,5 @@ import { OrganizationsModule } from './organizations/organizations.module';
             useClass: JwtAuthGuard,
         },
     ],
-    controllers: [OrganizationsController],
 })
 export class AppModule {}

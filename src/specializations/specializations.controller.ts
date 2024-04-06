@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { SpecializationsService } from './specializations.service';
 import { Public } from '@common/decorators';
-import { createSpecialization } from './dto';
+import { CreateSpecializationDto } from './dto';
+import { ApiTags } from '@nestjs/swagger';
 @Public()
+@ApiTags('Specialization')
 @Controller('specializations')
 export class SpecializationsController {
     constructor(private readonly specializationsService: SpecializationsService) {}
@@ -15,7 +17,7 @@ export class SpecializationsController {
         return this.specializationsService.deleteSpecializaztions(id);
     }
     @Post()
-    postSpecializations(@Body() dto: createSpecialization) {
+    postSpecializations(@Body() dto: CreateSpecializationDto) {
         return this.specializationsService.postSpecializations(dto);
     }
 }

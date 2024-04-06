@@ -3,10 +3,15 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { CreateOrganizations } from './dto';
 import { OrganizationsService } from './organizations.service';
 import { UpdateOrganizations } from './dto/updateOrganizations.dto';
+import { Public } from '@common/decorators';
+import { ApiTags } from '@nestjs/swagger';
 
+@Public()
+@ApiTags('Organization')
 @Controller('organizations')
 export class OrganizationsController {
     constructor(private readonly organizationsService: OrganizationsService) {}
+
     @Get() getAllOrganizations() {
         return this.organizationsService.getAll();
     }
