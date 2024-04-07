@@ -10,6 +10,7 @@ import { SpecializationsModule } from './specializations/specializations.module'
 import { CategoryModule } from './category/category.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { LessonModule } from './lesson/lesson.module';
 
 @Module({
     imports: [
@@ -22,6 +23,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
         CategoryModule,
         PortfolioModule,
         OrganizationsModule,
+        LessonModule,
     ],
     providers: [
         {
