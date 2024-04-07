@@ -15,6 +15,17 @@ export class StatementService {
         return this.prismaService.statement.findMany({ where: { userId: user.id } });
     }
 
+    getByUserIdAndLessonId(userId: string, lessonId: string) {
+        return this.prismaService.statement.findUniqueOrThrow({
+            where: {
+                userId_lessonId: {
+                    userId,
+                    lessonId,
+                },
+            },
+        });
+    }
+
     create(dto: CreateStatementDto) {
         return this.prismaService.statement.create({ data: { ...dto } });
     }

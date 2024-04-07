@@ -80,6 +80,8 @@ model Lessons{
   user User @relation(fields: [userId], references: [id], onDelete: NoAction)
   userId String
   group Int
+  dateStart DateTime @default("2025-04-05T20:16:12.924Z") @map("date_start")
+  dateEnd DateTime @default("2025-09-05T20:16:12.924Z") @map("date_end")
   statement Statement[]
   credit Credits[]
   @@map("lessons")
@@ -92,6 +94,7 @@ model Statement{
   lessonId String
   quater Int
   mark Marks[]
+  @@unique(fields: [userId, lessonId])
   @@map("statement")
 }
 

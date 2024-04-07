@@ -12,7 +12,17 @@ async function bootstrap() {
         .setTitle('Personal cabinet')
         .setDescription('The personal cabinet API description')
         .setVersion('1.0')
-        .addBearerAuth()
+        .addBearerAuth(
+            {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+                name: 'JWT',
+                description: 'Enter JWT token',
+                in: 'header',
+            },
+            'JWT-auth',
+        )
         .build();
 
     const options: SwaggerDocumentOptions = {

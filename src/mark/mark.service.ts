@@ -10,6 +10,12 @@ export class MarkService {
         return this.prismaService.marks.findMany();
     }
 
+    getAllById(id: string) {
+        return this.prismaService.marks.findMany({
+            where: { statementId: id },
+        });
+    }
+
     create(dto: CreateMarkDto) {
         return this.prismaService.marks.create({
             data: { ...dto, date: new Date(dto.date) },

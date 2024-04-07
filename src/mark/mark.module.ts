@@ -5,5 +5,6 @@ import { MarkController } from './mark.controller';
 @Module({
     providers: [MarkService],
     controllers: [MarkController],
+    exports: [MarkService],
 })
 export class MarkModule {}

@@ -12,6 +12,7 @@ import { PortfolioModule } from './portfolio/portfolio.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { LessonModule } from './lesson/lesson.module';
 import { CreditModule } from './credit/credit.module';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { CreditModule } from './credit/credit.module';
         OrganizationsModule,
         LessonModule,
         CreditModule,
+        TeacherModule,
     ],
     providers: [
         {

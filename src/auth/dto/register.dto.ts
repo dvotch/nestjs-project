@@ -87,7 +87,7 @@ export class RegisterDto implements User {
     @ApiProperty({
         description: 'Дата зачисления',
         type: 'Date',
-        default: '02-02-2024',
+        default: '2025-04-05T20:16:12.924Z',
         required: true,
     })
     dateOfReceipt: Date;

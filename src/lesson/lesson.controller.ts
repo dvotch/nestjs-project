@@ -2,11 +2,11 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { LessonService } from './lesson.service';
 import { CreateLeessonDto, UpdateLessonDto } from './dto';
 import { CurrentUser, Public } from '@common/decorators';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtPayload } from '@auth/interfaces';
 
-@Public()
 @ApiTags('Lesson')
+@ApiBearerAuth('JWT-auth')
 @Controller('lesson')
 export class LessonController {
     constructor(private readonly lessonService: LessonService) {}

@@ -16,12 +16,12 @@ import { CurrentUser, Public, Roles } from '@common/decorators';
 import { JwtPayload } from '@auth/interfaces';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Role } from '@prisma/client';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @ApiTags('User')
-@Public()
 @Controller('user')
+@ApiBearerAuth('JWT-auth')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
@@ -44,10 +44,9 @@ export class UserController {
         return this.userService.delete(id, user);
     }
 
-    @UseGuards(RolesGuard)
-    @Roles(Role.RESOURCES_DEPARTMENT)
-    @Get('/me')
+    @Post('/me')
     me(@CurrentUser() user: JwtPayload) {
+        console.log(user);
         return user;
     }
 
