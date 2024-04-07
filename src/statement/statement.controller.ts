@@ -13,12 +13,12 @@ export class StatementController {
     constructor(private readonly statementService: StatementService) {}
 
     @Get('/me')
-    getAllMy(@CurrentUser() user: JwtPayload) {
-        return this.statementService.getMyStatement(user);
+    getAllMyStatements(@CurrentUser() user: JwtPayload) {
+        return this.statementService.getAllById(user);
     }
 
     @Get()
-    getAll() {
+    getAllStatements() {
         return this.statementService.getAll();
     }
 

@@ -8,14 +8,14 @@ import { CurrentUser } from '@common/decorators';
 export class CreditService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    getAllMyCredits(id: string) {
+    getAll() {
+        return this.prismaService.credits.findMany();
+    }
+
+    getAllById(id: string) {
         return this.prismaService.credits.findMany({
             where: { id },
         });
-    }
-
-    getAll() {
-        return this.prismaService.credits.findMany();
     }
 
     create(dto: CreateCreditDto) {

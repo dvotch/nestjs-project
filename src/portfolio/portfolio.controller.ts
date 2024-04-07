@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { PortfolioService } from './portfolio.service';
 import { CreatePortfolioDto } from './dto/createPortfolio.dto';
-import { Public } from '@common/decorators';
+import { CurrentUser, Public } from '@common/decorators';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdatePortfolioDto } from './dto/updatePortfolio.dto';
+import { JwtPayload } from '@auth/interfaces';
 
 @Public()
 @ApiTags('Portfolio')
@@ -14,6 +15,11 @@ export class PortfolioController {
     @Get()
     getAllPortfolio() {
         return this.portfolioService.getAll();
+    }
+
+    @Get('/my')
+    getAllMyPortfolio(@CurrentUser() user: JwtPayload) {
+        return this.portfolioService.getAllById(user.id);
     }
 
     @Post()

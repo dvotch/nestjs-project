@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { LessonService } from './lesson.service';
 import { CreateLeessonDto, UpdateLessonDto } from './dto';
-import { Public } from '@common/decorators';
+import { CurrentUser, Public } from '@common/decorators';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtPayload } from '@auth/interfaces';
 
 @Public()
 @ApiTags('Lesson')
@@ -13,6 +14,11 @@ export class LessonController {
     @Get()
     getAllLessons() {
         return this.lessonService.getAll();
+    }
+
+    @Get('/my')
+    getAllMyLessons(@CurrentUser() user: JwtPayload) {
+        return this.lessonService.getAllById(user.id);
     }
 
     @Post()
