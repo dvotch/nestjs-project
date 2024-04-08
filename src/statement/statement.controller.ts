@@ -3,11 +3,11 @@ import { Get, Controller, Post, Body, Put, Param, Delete } from '@nestjs/common'
 import { StatementService } from './statement.service';
 import { JwtPayload } from '@auth/interfaces';
 import { CurrentUser, Public } from '@common/decorators';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateStatementDto, UpdateStatementDto } from './dto';
 
-@Public()
 @ApiTags('Statement')
+@ApiBearerAuth('JWT-auth')
 @Controller('statement')
 export class StatementController {
     constructor(private readonly statementService: StatementService) {}

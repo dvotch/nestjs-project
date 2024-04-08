@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Lessons } from '@prisma/client';
 import { Exclude } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 
 export class CreateLeessonDto implements Lessons {
     @Exclude()
@@ -33,4 +33,22 @@ export class CreateLeessonDto implements Lessons {
         required: true,
     })
     userId: string;
+
+    @IsDate()
+    @ApiProperty({
+        description: 'Дата начала',
+        type: 'date',
+        default: '2025-04-05T20:16:12.924Z',
+        required: true,
+    })
+    dateStart: Date;
+
+    @IsDate()
+    @ApiProperty({
+        description: 'Дата конца',
+        type: 'date',
+        default: '2025-09-05T20:16:12.924Z',
+        required: true,
+    })
+    dateEnd: Date;
 }

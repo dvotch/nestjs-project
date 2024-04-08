@@ -63,4 +63,12 @@ export class UserService {
     getAll() {
         return this.prismaService.user.findMany();
     }
+
+    console(user: JwtPayload) {
+        return user;
+    }
+
+    getAllByGroup(group: number) {
+        return this.prismaService.user.findMany({ where: { group: +group } });
+    }
 }

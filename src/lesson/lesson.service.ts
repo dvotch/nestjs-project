@@ -16,6 +16,12 @@ export class LessonService {
         });
     }
 
+    getAllByUserId(id: string) {
+        return this.prismaService.lessons.findMany({
+            where: { userId: id },
+        });
+    }
+
     create(dto: CreateLeessonDto) {
         return this.prismaService.lessons.create({
             data: { ...dto },

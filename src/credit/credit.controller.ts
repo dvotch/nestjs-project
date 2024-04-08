@@ -18,7 +18,7 @@ export class CreditController {
 
     @Get('/my')
     getAllMyCredits(@CurrentUser() user: JwtPayload) {
-        return this.creditService.getAllById(user.id);
+        return this.creditService.getByUserId(user.id);
     }
 
     @Post()

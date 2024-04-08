@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Lessons } from '@prisma/client';
 import { Exclude } from 'class-transformer';
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsDate } from 'class-validator';
 
-export class UpdateLessonDto implements Partial<Lessons> {
+export class UpdateLessonDto implements Lessons {
     @Exclude()
     id: string;
 
@@ -12,9 +12,9 @@ export class UpdateLessonDto implements Partial<Lessons> {
         description: 'Название предмета',
         type: 'string',
         default: 'МДК 03.01',
-        required: true,
+        required: false,
     })
-    name?: string;
+    name: string;
 
     @IsNumber()
     @ApiProperty({
@@ -23,14 +23,32 @@ export class UpdateLessonDto implements Partial<Lessons> {
         default: 205,
         required: true,
     })
-    group?: number;
+    group: number;
 
     @IsString()
     @ApiProperty({
         description: 'Cсылка на преподавателя',
         type: 'string',
         default: '5560baef-302a-4e8b-a101-758e45d31fd7',
-        required: true,
+        required: false,
     })
-    userId?: string;
+    userId: string;
+
+    @IsDate()
+    @ApiProperty({
+        description: 'Дата начала',
+        type: 'date',
+        default: '2025-04-05T20:16:12.924Z',
+        required: false,
+    })
+    dateStart: Date;
+
+    @IsDate()
+    @ApiProperty({
+        description: 'Дата конца',
+        type: 'date',
+        default: '2025-09-05T20:16:12.924Z',
+        required: false,
+    })
+    dateEnd: Date;
 }

@@ -3,7 +3,8 @@ import { CreditService } from './credit.service';
 import { CreditController } from './credit.controller';
 
 @Module({
-  providers: [CreditService],
-  controllers: [CreditController]
+    providers: [CreditService],
+    controllers: [CreditController],
+    exports: [CreditService],
 })
 export class CreditModule {}

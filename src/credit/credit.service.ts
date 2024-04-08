@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreateCreditDto, UpdateCreditDto } from './dto';
 import { JwtPayload } from '@auth/interfaces';
-import { CurrentUser } from '@common/decorators';
+import { Lessons } from '@prisma/client';
 
 @Injectable()
 export class CreditService {
@@ -12,9 +12,15 @@ export class CreditService {
         return this.prismaService.credits.findMany();
     }
 
-    getAllById(id: string) {
+    getByUserId(id: string) {
         return this.prismaService.credits.findMany({
-            where: { id },
+            where: { userId: id },
+        });
+    }
+
+    getByLessonId(id: string) {
+        return this.prismaService.credits.findMany({
+            where: { lessonId: id },
         });
     }
 
