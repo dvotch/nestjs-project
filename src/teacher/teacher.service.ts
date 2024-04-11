@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@prisma/prisma.service';
 import { UserService } from '@user/user.service';
 import { CreditService } from 'src/credit/credit.service';
 import { LessonService } from 'src/lesson/lesson.service';
@@ -18,19 +17,6 @@ export class TeacherService {
 
     getMyLessons(id: string) {
         return this.lessonService.getAllByUserId(id);
-    }
-
-    async getMyCredits(id: string) {
-        const lessons = await this.lessonService.getAllByUserId(id);
-        const credits = [];
-        for (const elem of lessons) {
-            const creditsForLesson = await this.creditService.getByLessonId(elem.id);
-            console.log(creditsForLesson);
-            if (creditsForLesson.length !== 0) {
-                credits.push(...creditsForLesson);
-            }
-        }
-        return credits;
     }
 
     getAllUsersInGroup(group: number) {
