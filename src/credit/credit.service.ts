@@ -3,10 +3,14 @@ import { PrismaService } from '@prisma/prisma.service';
 import { CreateCreditDto, UpdateCreditDto } from './dto';
 import { JwtPayload } from '@auth/interfaces';
 import { Lessons } from '@prisma/client';
+import { LessonService } from 'src/lesson/lesson.service';
 
 @Injectable()
 export class CreditService {
-    constructor(private readonly prismaService: PrismaService) {}
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly lessonService: LessonService,
+    ) {}
 
     getAll() {
         return this.prismaService.credits.findMany();
@@ -43,5 +47,17 @@ export class CreditService {
             where: { id },
             data: { ...dto },
         });
+    }
+
+    async getCreditsForTeacher(id: string) {
+        const lessons = await this.lessonService.getAllByUserId(id);
+        const credits = [];
+        for (const elem of lessons) {
+            const creditsForLesson = await this.getByLessonId(elem.id);
+            if (creditsForLesson.length !== 0) {
+                credits.push(...creditsForLesson);
+            }
+        }
+        return credits;
     }
 }

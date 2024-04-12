@@ -20,7 +20,7 @@ export class UserService {
     save(dto: CreateUserDto) {
         const hashedPassword = this.hashPassword(dto.password);
         return this.prismaService.user.create({
-            data: { ...dto, dateOfReceipt: new Date(dto.dateOfReceipt), password: hashedPassword },
+            data: { ...dto, password: hashedPassword },
         });
     }
 
@@ -62,10 +62,6 @@ export class UserService {
 
     getAll() {
         return this.prismaService.user.findMany();
-    }
-
-    console(user: JwtPayload) {
-        return user;
     }
 
     getAllByGroup(group: number) {

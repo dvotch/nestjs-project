@@ -40,9 +40,8 @@ export class AuthService {
             this.logger.error(error);
             return null;
         });
-        // eslint-disable-next-line no-use-before-define
-        //!compareSync(dto.password, user.password)
-        if (!user || dto.password === user.password) {
+
+        if (!user || !compareSync(dto.password, user.password)) {
             throw new UnauthorizedException('Неверный логин или пароль');
         }
 
