@@ -13,6 +13,8 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { LessonModule } from './lesson/lesson.module';
 import { CreditModule } from './credit/credit.module';
 import { TeacherModule } from './teacher/teacher.module';
+import { StudentController } from './student/student.controller';
+import { StudentModule } from './student/student.module';
 
 @Module({
     imports: [
@@ -28,6 +30,7 @@ import { TeacherModule } from './teacher/teacher.module';
         LessonModule,
         CreditModule,
         TeacherModule,
+        StudentModule,
     ],
     providers: [
         {

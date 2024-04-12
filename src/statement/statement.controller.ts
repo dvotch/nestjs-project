@@ -14,7 +14,7 @@ export class StatementController {
 
     @Get('/me')
     getAllMyStatements(@CurrentUser() user: JwtPayload) {
-        return this.statementService.getAllById(user);
+        return this.statementService.getAllById(user.id);
     }
 
     @Get()

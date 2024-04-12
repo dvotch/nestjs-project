@@ -12,7 +12,6 @@ export class TeacherController {
 
     @Get('/lessons')
     getMyLessons(@CurrentUser() user: JwtPayload) {
-        console.log(user);
         return this.teacherService.getMyLessons(user.id);
     }
 
