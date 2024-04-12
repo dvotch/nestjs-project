@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreatePortfolioDto } from './dto/createPortfolio.dto';
 import { UpdateCategoryDto } from 'src/category/dto/updateCategory.dto';
@@ -18,17 +18,13 @@ export class PortfolioService {
     create(dto: CreatePortfolioDto) {
         return this.prismaService.portfolio.create({
             data: {
-                name: dto.name,
-                photo: dto.photo,
-                year: dto.year,
-                categoryId: dto.categoryId,
-                userId: dto.userId,
+                ...dto,
             },
         });
     }
 
-    update(id: string, dto: Partial<UpdateCategoryDto>) {
-        const portfolio = this.prismaService.portfolio.findUnique({
+    async update(id: string, dto: UpdateCategoryDto, userId: string) {
+        const portfolio = await this.prismaService.portfolio.findUnique({
             where: {
                 id,
             },
@@ -36,6 +32,10 @@ export class PortfolioService {
 
         if (!portfolio) {
             throw new NotFoundException('Такой записи не существует');
+        }
+
+        if (userId !== portfolio.userId) {
+            throw new ForbiddenException('Невозможно изменить чужую запись');
         }
 
         return this.prismaService.portfolio.update({
@@ -46,7 +46,21 @@ export class PortfolioService {
         });
     }
 
-    delete(id: string) {
+    async delete(id: string, userId: string) {
+        const portfolio = await this.prismaService.portfolio.findUnique({
+            where: {
+                id,
+            },
+        });
+
+        if (!portfolio) {
+            throw new NotFoundException('Такой записи не существует');
+        }
+
+        if (userId !== portfolio.userId) {
+            throw new ForbiddenException('Невозможно удалить чужую запись');
+        }
+
         return this.prismaService.portfolio.delete({ where: { id } });
     }
 }

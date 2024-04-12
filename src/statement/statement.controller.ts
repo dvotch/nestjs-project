@@ -1,10 +1,12 @@
-import { Get, Controller, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Get, Controller, Post, Body, Put, Param, Delete, UseGuards } from '@nestjs/common';
 
 import { StatementService } from './statement.service';
 import { JwtPayload } from '@auth/interfaces';
-import { CurrentUser, Public } from '@common/decorators';
+import { CurrentUser, Public, Roles } from '@common/decorators';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateStatementDto, UpdateStatementDto } from './dto';
+import { RolesGuard } from '@auth/guards/role.guard';
+import { Role } from '@prisma/client';
 
 @ApiTags('Statement')
 @ApiBearerAuth('JWT-auth')
@@ -12,26 +14,36 @@ import { CreateStatementDto, UpdateStatementDto } from './dto';
 export class StatementController {
     constructor(private readonly statementService: StatementService) {}
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
     @Get('/me')
     getAllMyStatements(@CurrentUser() user: JwtPayload) {
         return this.statementService.getAllById(user.id);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Get()
     getAllStatements() {
         return this.statementService.getAll();
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Post()
     createStatement(@Body() dto: CreateStatementDto) {
         return this.statementService.create(dto);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Put('/:id')
     updateStatement(@Param('id') id: string, @Body() dto: UpdateStatementDto) {
         return this.statementService.update(id, dto);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Delete('/:id')
     deleteStatement(@Param('id') id: string) {
         return this.statementService.delete(id);

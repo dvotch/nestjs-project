@@ -12,12 +12,12 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserResponse } from './responses';
-import { CurrentUser, Public, Roles } from '@common/decorators';
+import { CurrentUser, Roles } from '@common/decorators';
 import { JwtPayload } from '@auth/interfaces';
-import { RolesGuard } from '@auth/guards/role.guard';
-import { Role } from '@prisma/client';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
+import { RolesGuard } from '@auth/guards/role.guard';
+import { Role } from '@prisma/client';
 
 @ApiTags('User')
 @Controller('user')
@@ -25,6 +25,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @UseInterceptors(ClassSerializerInterceptor)
     @Post()
     async createUser(@Body() dto: CreateUserDto) {
@@ -32,6 +34,8 @@ export class UserController {
         return new UserResponse(user);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @UseInterceptors(ClassSerializerInterceptor)
     @Get(':idOrEmail')
     async findOneUser(@Param('idOrEmail') idOrEmail: string) {
@@ -39,19 +43,32 @@ export class UserController {
         return new UserResponse(user);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Delete(':id')
     async deleteUser(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: JwtPayload) {
         return this.userService.delete(id, user);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT, Role.STUDENT, Role.TEACHER)
     @Post('/me')
     me(@CurrentUser() user: JwtPayload) {
         console.log(user);
         return user;
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Get()
     getAll() {
         return this.userService.getAll();
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT, Role.TEACHER)
+    @Get('/:group')
+    getStudentsInGroup(@Param('group') group: number) {
+        return this.userService.getAllByGroup(group);
     }
 }
