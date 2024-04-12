@@ -20,8 +20,18 @@ export class StudentService {
     ) {}
 
     async getMyLessons(id: string, quater: number) {
-        const statementByUserId = await this.statementService.getAllById(id);
-        return statementByUserId.filter((elem) => elem.quater === quater);
+        let statementByUserId = await this.statementService.getAllById(id);
+
+        const lessons = [];
+        statementByUserId = statementByUserId.filter((elem) => +elem.quater === +quater);
+
+        for (const elem of statementByUserId) {
+            const lesson = await this.lessonService.getById(elem.lessonId);
+
+            lessons.push(lesson);
+        }
+
+        return lessons;
     }
 
     async getMyCredits(id: string) {
