@@ -12,13 +12,18 @@ export class LessonService {
 
     getAllById(id: string) {
         return this.prismaService.lessons.findMany({
-            where: { id },
+            where: { userId: id },
         });
     }
 
     getAllByUserId(id: string) {
         return this.prismaService.lessons.findMany({
             where: { userId: id },
+        });
+    }
+    getById(id: string) {
+        return this.prismaService.lessons.findUnique({
+            where: { id },
         });
     }
 

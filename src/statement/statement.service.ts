@@ -11,8 +11,8 @@ export class StatementService {
         return this.prismaService.statement.findMany();
     }
 
-    getAllById(user: JwtPayload) {
-        return this.prismaService.statement.findMany({ where: { userId: user.id } });
+    getAllById(id: string) {
+        return this.prismaService.statement.findMany({ where: { userId: id } });
     }
 
     getByUserIdAndLessonId(userId: string, lessonId: string) {

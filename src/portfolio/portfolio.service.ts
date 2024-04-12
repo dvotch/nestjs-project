@@ -11,8 +11,8 @@ export class PortfolioService {
         return this.prismaService.portfolio.findMany();
     }
 
-    getAllById(id: string) {
-        return this.prismaService.portfolio.findMany({ where: { id } });
+    getAllById(userId: string) {
+        return this.prismaService.portfolio.findMany({ where: { userId } });
     }
 
     create(dto: CreatePortfolioDto) {

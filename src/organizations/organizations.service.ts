@@ -9,6 +9,9 @@ export class OrganizationsService {
     getAll() {
         return this.prismaService.organizations.findMany();
     }
+    getAllByUserId(id: string) {
+        return this.prismaService.organizations.findMany({ where: { id } });
+    }
     create(dto: CreateOrganizations) {
         return this.prismaService.organizations.create({
             data: {

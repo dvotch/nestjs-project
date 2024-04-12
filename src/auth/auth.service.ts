@@ -55,6 +55,8 @@ export class AuthService {
                 id: user.id,
                 email: user.email,
                 roles: user.roles,
+                organizationId: user.organizationId,
+                
             });
 
         const refreshToken = await this.getRefreshToken(user.id, agent);
