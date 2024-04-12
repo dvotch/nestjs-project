@@ -20,21 +20,22 @@ export class StudentService {
     ) {}
 
     async getMyLessons(id: string, quater: number) {
-        const statementByUserId = await this.statementService.getAllById(id);
-        return statementByUserId.filter((elem) => elem.quater === quater);
+        let statementByUserId = await this.statementService.getAllById(id);
+
+        const lessons = [];
+        statementByUserId = statementByUserId.filter((elem) => +elem.quater === +quater);
+
+        for (const elem of statementByUserId) {
+            const lesson = await this.lessonService.getById(elem.lessonId);
+
+            lessons.push(lesson);
+        }
+
+        return lessons;
     }
 
     async getMyCredits(id: string) {
-        const lessons = await this.lessonService.getAllByUserId(id);
-        const credits = [];
-        for (const elem of lessons) {
-            const creditsForLesson = await this.creditService.getByLessonId(elem.id);
-
-            if (creditsForLesson.length !== 0) {
-                credits.push(...creditsForLesson);
-            }
-        }
-        return credits;
+        return this.creditService.getByUserId(id);
     }
 
     async getMyOrganization(id: string) {
@@ -45,7 +46,6 @@ export class StudentService {
     }
     async getStudentMarks(userId: string, lessonId: string) {
         const statementId = this.statementService.getByUserIdAndLessonId(userId, lessonId);
-
         return this.markService.getAllById((await statementId).id);
     }
 }

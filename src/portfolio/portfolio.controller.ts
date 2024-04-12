@@ -17,10 +17,10 @@ export class PortfolioController {
         return this.portfolioService.getAll();
     }
 
-    // @Get('/my')
-    // getAllMyPortfolio(@CurrentUser() user: JwtPayload) {
-    //     return this.portfolioService.getAllById(user.id);
-    // }
+    @Get('/my')
+    getAllMyPortfolio(@CurrentUser() user: JwtPayload) {
+        return this.portfolioService.getAllById(user.id);
+    }
 
     @Post()
     createPortfolio(@Body() dto: CreatePortfolioDto) {

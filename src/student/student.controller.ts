@@ -10,9 +10,9 @@ import { JwtPayload } from '@auth/interfaces';
 export class StudentController {
     constructor(private readonly studentService: StudentService) {}
 
-    @Get('/lessons')
-    getMyLessons(@Param('user') userId: string, quater: number) {
-        return this.studentService.getMyLessons(userId, quater);
+    @Get('/lessons/:quater')
+    getMyLessons(@CurrentUser() user: JwtPayload, @Param('quater') quater: number) {
+        return this.studentService.getMyLessons(user.id, quater);
     }
 
     @Get('/marks/:lesson/:user')
