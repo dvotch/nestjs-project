@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { CreateMarkDto, UpdateMarkDto } from './dto';
+import { StatementService } from 'src/statement/statement.service';
 
 @Injectable()
 export class MarkService {
-    constructor(private readonly prismaService: PrismaService) {}
+    constructor(
+        private readonly prismaService: PrismaService,
+        private readonly statementService: StatementService,
+    ) {}
 
     getAll() {
         return this.prismaService.marks.findMany();
@@ -18,7 +22,7 @@ export class MarkService {
 
     create(dto: CreateMarkDto) {
         return this.prismaService.marks.create({
-            data: { ...dto, date: new Date(dto.date) },
+            data: { ...dto },
         });
     }
 
@@ -32,15 +36,19 @@ export class MarkService {
             throw new NotFoundException('Такой записи не существует');
         }
 
-        const date = dto.date ? new Date(dto.date) : (await mark).date;
-
         return this.prismaService.marks.update({
             where: { id },
-            data: { ...dto, date },
+            data: { ...dto },
         });
     }
 
     delete(id: string) {
         return this.prismaService.marks.delete({ where: { id } });
+    }
+
+    async getStudentMarks(userId: string, lessonId: string) {
+        const statementId = this.statementService.getByUserIdAndLessonId(userId, lessonId);
+
+        return this.getAllById((await statementId).id);
     }
 }

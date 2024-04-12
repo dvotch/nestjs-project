@@ -1,23 +1,42 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { SpecializationsService } from './specializations.service';
-import { Public } from '@common/decorators';
-import { CreateSpecializationDto } from './dto';
-import { ApiTags } from '@nestjs/swagger';
-@Public()
+import { Roles } from '@common/decorators';
+import { CreateSpecializationDto, UpdateSpecializationDto } from './dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { RolesGuard } from '@auth/guards/role.guard';
+import { Role } from '@prisma/client';
+
 @ApiTags('Specialization')
 @Controller('specializations')
+@ApiBearerAuth('JWT-auth')
 export class SpecializationsController {
     constructor(private readonly specializationsService: SpecializationsService) {}
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Get()
     getSpecializations() {
-        return this.specializationsService.findAllSpecializaztions();
+        return this.specializationsService.findAll();
     }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Delete('/:id')
-    deleteSpecializations(@Param('id') id: string) {
-        return this.specializationsService.deleteSpecializaztions(id);
+    deleteSpecialization(@Param('id') id: string) {
+        return this.specializationsService.delete(id);
     }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
     @Post()
-    postSpecializations(@Body() dto: CreateSpecializationDto) {
-        return this.specializationsService.postSpecializations(dto);
+    postSpecialization(@Body() dto: CreateSpecializationDto) {
+        return this.specializationsService.create(dto);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
+    @Put('/:id')
+    updateSpecialization(@Param('id') id: string, @Body() dto: UpdateSpecializationDto) {
+        return this.specializationsService.update(id, dto);
     }
 }
