@@ -12,7 +12,7 @@ import { PortfolioModule } from './portfolio/portfolio.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { LessonModule } from './lesson/lesson.module';
 import { CreditModule } from './credit/credit.module';
-import { TeacherModule } from './teacher/teacher.module';
+
 import { StudentController } from './student/student.controller';
 import { StudentModule } from './student/student.module';
 
@@ -29,7 +29,7 @@ import { StudentModule } from './student/student.module';
         OrganizationsModule,
         LessonModule,
         CreditModule,
-        TeacherModule,
+
         StudentModule,
     ],
     providers: [
