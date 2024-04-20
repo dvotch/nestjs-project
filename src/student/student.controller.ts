@@ -21,8 +21,8 @@ export class StudentController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
-    @Get('/marks/:lesson/:user')
-    async getStudentMarks(@Param('user') userId: string, @Param('lesson') lessonId: string) {
+    @Get('/marks/:lesson')
+    async getStudentMarks(@CurrentUser() userId: string, @Param('lesson') lessonId: string) {
         return this.studentService.getStudentMarks(userId, lessonId);
     }
 
