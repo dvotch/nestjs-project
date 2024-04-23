@@ -8,6 +8,7 @@ import { PrismaService } from '@prisma/prisma.service';
 import { genSaltSync, hashSync } from 'bcrypt';
 import { Cache } from 'cache-manager';
 import { CreateUserDto } from './dto/create-user.dto';
+import bufferToDataUrl from 'buffer-to-data-url';
 
 @Injectable()
 export class UserService {
@@ -66,5 +67,25 @@ export class UserService {
 
     getAllByGroup(group: number) {
         return this.prismaService.user.findMany({ where: { group: +group } });
+    }
+
+    async getMyLogo(id: string) {
+        const user = await this.prismaService.user.findUnique({
+            where: {
+                id,
+            },
+        });
+        return bufferToDataUrl('image/png', user.avatar);
+    }
+
+    async uploadMyLogo(id: string, avatar: Express.Multer.File) {
+        return this.prismaService.user.update({
+            where: {
+                id,
+            },
+            data: {
+                avatar: avatar.buffer,
+            },
+        });
     }
 }
