@@ -49,6 +49,11 @@ export class AuthService {
     }
 
     private async generateTokens(user: User, agent: string): Promise<Tokens> {
+        const specialization = this.prismaService.specializations.findUnique({
+            where: {
+                id: user.specializationId,
+            },
+        });
         const accessToken =
             'Bearer ' +
             this.jwtService.sign({
@@ -56,7 +61,8 @@ export class AuthService {
                 email: user.email,
                 roles: user.roles,
                 organizationId: user.organizationId,
-                
+                specialization,
+                group: user.group,
             });
 
         const refreshToken = await this.getRefreshToken(user.id, agent);
