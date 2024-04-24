@@ -12,4 +12,6 @@ export interface JwtPayload {
     organizationId: string;
     group: number;
     specialization: string;
+    name: string;
+    surname: string;
 }
