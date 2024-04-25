@@ -6,6 +6,7 @@ import { UpdateCategoryDto } from './dto/updateCategory.dto';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Roles } from '@common/decorators';
 import { Role } from '@prisma/client';
+import { getCategoriesResponse } from './responses/getCategory';
 
 @ApiTags('Category')
 @Controller('category')
@@ -14,9 +15,9 @@ export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
     @UseGuards(RolesGuard)
-    @Roles(Role.RESOURCES_DEPARTMENT, Role.STUDENT)
+    @Roles(Role.RESOURCES_DEPARTMENT, Role.STUDENT, Role.TEACHER)
     @Get()
-    getAllCategories() {
+    async getAllCategories() {
         return this.categoryService.getAll();
     }
 
