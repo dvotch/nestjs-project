@@ -6,7 +6,6 @@ import { UpdateCategoryDto } from './dto/updateCategory.dto';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Roles } from '@common/decorators';
 import { Role } from '@prisma/client';
-import { getCategoriesResponse } from './responses/getCategory';
 
 @ApiTags('Category')
 @Controller('category')
