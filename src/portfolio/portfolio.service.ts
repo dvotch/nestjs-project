@@ -15,10 +15,13 @@ export class PortfolioService {
         return this.prismaService.portfolio.findMany({ where: { userId } });
     }
 
-    create(dto: CreatePortfolioDto) {
+    create(dto: CreatePortfolioDto, photo: Express.Multer.File) {
+        console.log(dto);
         return this.prismaService.portfolio.create({
             data: {
                 ...dto,
+                year: +dto.year,
+                photo: photo.buffer,
             },
         });
     }

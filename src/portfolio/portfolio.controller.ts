@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import { PortfolioService } from './portfolio.service';
 import { CreatePortfolioDto } from './dto/createPortfolio.dto';
 import { CurrentUser, Public, Roles } from '@common/decorators';
@@ -7,6 +18,7 @@ import { UpdatePortfolioDto } from './dto/updatePortfolio.dto';
 import { JwtPayload } from '@auth/interfaces';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Role } from '@prisma/client';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Portfolio')
 @Controller('portfolio')
@@ -16,7 +28,7 @@ export class PortfolioController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
-    @Get('/:id')
+    @Get()
     getAllPortfolioById(@Param() id: string) {
         return this.portfolioService.getAllById(id);
     }
@@ -29,10 +41,11 @@ export class PortfolioController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles(Role.STUDENT)
+    @Roles(Role.STUDENT, Role.TEACHER)
+    @UseInterceptors(FileInterceptor('photo'))
     @Post()
-    createPortfolio(@Body() dto: CreatePortfolioDto) {
-        return this.portfolioService.create(dto);
+    createPortfolio(@Body() dto: CreatePortfolioDto, @UploadedFile() photo: Express.Multer.File) {
+        return this.portfolioService.create(dto, photo);
     }
 
     @UseGuards(RolesGuard)
