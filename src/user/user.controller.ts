@@ -42,6 +42,13 @@ export class UserController {
         this.userService.uploadMyLogo(user.id, file);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT, Role.TEACHER)
+    @Get('/:group')
+    getStudentsInGroup(@Param('group') group: number) {
+        return this.userService.getAllByGroup(group);
+    }
+
     @UseInterceptors(ClassSerializerInterceptor)
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
@@ -69,7 +76,7 @@ export class UserController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT, Role.STUDENT, Role.TEACHER)
-    @Post('/me')
+    @Get('/me')
     me(@CurrentUser() user: JwtPayload) {
         console.log(user);
         return user;
@@ -80,12 +87,5 @@ export class UserController {
     @Get()
     getAll() {
         return this.userService.getAll();
-    }
-
-    @UseGuards(RolesGuard)
-    @Roles(Role.RESOURCES_DEPARTMENT, Role.TEACHER)
-    @Get('/:group')
-    getStudentsInGroup(@Param('group') group: number) {
-        return this.userService.getAllByGroup(group);
     }
 }
