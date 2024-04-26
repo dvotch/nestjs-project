@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { StudentService } from './student.service';
 import { CurrentUser, Roles } from '@common/decorators';
@@ -43,7 +43,7 @@ export class StudentController {
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
     @Get('/portfolio')
-    getMyPortfolio(@CurrentUser() user: JwtPayload) {
-        return this.studentService.getMyPortfolio(user.id);
+    getMyPortfolio(@CurrentUser() user: JwtPayload, @Query('page') page: string) {
+        return this.studentService.getMyPortfolio(user.id, page);
     }
 }

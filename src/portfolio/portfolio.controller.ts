@@ -6,6 +6,7 @@ import {
     Param,
     Post,
     Put,
+    Query,
     UploadedFile,
     UseGuards,
     UseInterceptors,
@@ -29,15 +30,15 @@ export class PortfolioController {
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
     @Get()
-    getAllPortfolioById(@Param() id: string) {
-        return this.portfolioService.getAllById(id);
+    getAllPortfolioById(@Param('id') id: string, @Query('page') page: string) {
+        return this.portfolioService.getAllById(id, page);
     }
 
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
     @Get('/my')
-    getAllMyPortfolio(@CurrentUser() user: JwtPayload) {
-        return this.portfolioService.getAllById(user.id);
+    getAllMyPortfolio(@CurrentUser() user: JwtPayload, @Query('page') page: string) {
+        return this.portfolioService.getAllById(user.id, page);
     }
 
     @UseGuards(RolesGuard)

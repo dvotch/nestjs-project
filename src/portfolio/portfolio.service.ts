@@ -2,6 +2,9 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { PrismaService } from '@prisma/prisma.service';
 import { CreatePortfolioDto } from './dto/createPortfolio.dto';
 import { UpdateCategoryDto } from 'src/category/dto/updateCategory.dto';
+import { PaginatorTypes, paginator } from '@nodeteam/nestjs-prisma-pagination';
+import { Portfolio } from '@prisma/client';
+const paginate: PaginatorTypes.PaginateFunction = paginator({ perPage: 2 });
 
 @Injectable()
 export class PortfolioService {
@@ -11,12 +14,17 @@ export class PortfolioService {
         return this.prismaService.portfolio.findMany();
     }
 
-    getAllById(userId: string) {
-        return this.prismaService.portfolio.findMany({ where: { userId } });
+    getAllById(userId: string, page: string): Promise<PaginatorTypes.PaginatedResult<Portfolio>> {
+        return paginate(
+            this.prismaService.portfolio,
+            { where: { userId } },
+            {
+                page: +page,
+            },
+        );
     }
 
     create(dto: CreatePortfolioDto, photo: Express.Multer.File) {
-        console.log(dto);
         return this.prismaService.portfolio.create({
             data: {
                 ...dto,

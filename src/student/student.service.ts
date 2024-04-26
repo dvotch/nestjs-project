@@ -41,8 +41,8 @@ export class StudentService {
     async getMyOrganization(id: string) {
         return this.organizationsService.getAllByUserId(id);
     }
-    async getMyPortfolio(userId: string) {
-        return this.portfolioService.getAllById(userId);
+    async getMyPortfolio(userId: string, page: string) {
+        return this.portfolioService.getAllById(userId, page);
     }
     async getStudentMarks(userId: string, lessonId: string) {
         const statementId = this.statementService.getByUserIdAndLessonId(userId, lessonId);
