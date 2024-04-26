@@ -14,9 +14,9 @@ export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
     @UseGuards(RolesGuard)
-    @Roles(Role.RESOURCES_DEPARTMENT, Role.STUDENT)
+    @Roles(Role.RESOURCES_DEPARTMENT, Role.STUDENT, Role.TEACHER)
     @Get()
-    getAllCategories() {
+    async getAllCategories() {
         return this.categoryService.getAll();
     }
 

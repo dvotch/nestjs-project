@@ -22,12 +22,12 @@ model User {
   dateOfReceipt DateTime @map("date_of_receipt")
   password String
   email String @unique
-  group Int
+  group Int?
   avatar Bytes?
   organization Organizations? @relation(fields: [organizationId], references: [id], onDelete:  SetNull)
   organizationId String?
-  specialization Specializations @relation(fields: [specializationId], references: [id]) 
-  specializationId String 
+  specialization Specializations? @relation(fields: [specializationId], references: [id]) 
+  specializationId String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   roles Role[] @default([STUDENT])

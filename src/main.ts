@@ -11,6 +11,7 @@ async function bootstrap() {
     });
     app.use(cookieParser());
     app.setGlobalPrefix('api');
+    app.enableCors();
 
     const config = new DocumentBuilder()
         .setTitle('Personal cabinet')
