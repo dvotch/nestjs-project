@@ -65,6 +65,13 @@ export class UserService {
     }
 
     getAllByGroup(group: number) {
-        return this.prismaService.user.findMany({ where: { group: +group } });
+        return this.prismaService.user.findMany({
+            where: { group: +group },
+            select: {
+                id: true,
+                name: true,
+                surname: true,
+            },
+        });
     }
 }
