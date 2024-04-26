@@ -4,20 +4,39 @@ import { CreatePortfolioDto } from './dto/createPortfolio.dto';
 import { UpdateCategoryDto } from 'src/category/dto/updateCategory.dto';
 import { PaginatorTypes, paginator } from '@nodeteam/nestjs-prisma-pagination';
 import { Portfolio } from '@prisma/client';
-const paginate: PaginatorTypes.PaginateFunction = paginator({ perPage: 2 });
+const paginate: PaginatorTypes.PaginateFunction = paginator({ perPage: 10 });
 
 @Injectable()
 export class PortfolioService {
     constructor(private readonly prismaService: PrismaService) {}
+    1;
 
     getAll() {
         return this.prismaService.portfolio.findMany();
     }
 
-    getAllById(userId: string, page: string): Promise<PaginatorTypes.PaginatedResult<Portfolio>> {
+    async getAllById(userId: string, page: string): Promise<PaginatorTypes.PaginatedResult<Portfolio>> {
+        const portfolio = await this.prismaService.portfolio.findMany({
+            where: {
+                userId,
+            },
+        });
+
+        const editPorfolio = portfolio.map((elem) => {
+            return {
+                categoryId: this.prismaService.categories.findFirst({
+                    where: {
+                        id: elem.categoryId,
+                    },
+                }),
+                ...elem,
+            };
+        });
         return paginate(
-            this.prismaService.portfolio,
-            { where: { userId } },
+            editPorfolio,
+            {
+                where: {},
+            },
             {
                 page: +page,
             },
