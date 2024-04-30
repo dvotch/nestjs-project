@@ -23,7 +23,7 @@ export class StatementController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.TEACHER)
-    @Get('/teacher/:lesson')
+    @Get('/teacher/:lessonId')
     getAllUsersByLesson(@CurrentUser() user: JwtPayload, @Param('lessonId') lessonId: string) {
         return this.statementService.getAllUsersByLesson(lessonId);
     }
