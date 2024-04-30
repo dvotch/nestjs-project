@@ -25,7 +25,7 @@ export class StatementController {
     @Roles(Role.TEACHER)
     @Get('/teacher/:lesson')
     getAllUsersByLessonGroup(@CurrentUser() user: JwtPayload, @Param('lessonId') lessonId: string) {
-        return this.statementService.getAllUsersByLesson(user.id, lessonId);
+        return this.statementService.getAllUsersByLesson(user.id);
     }
 
     @UseGuards(RolesGuard)
