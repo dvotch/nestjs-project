@@ -16,7 +16,7 @@ export class StatementService {
     }
     async getAllUsersByLesson(lessonId: string) {
         const users = await this.prismaService.statement.findMany({
-            where: { lessonId },
+            where: { lessonId: lessonId },
         });
         return users;
     }
