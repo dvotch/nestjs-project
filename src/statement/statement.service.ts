@@ -14,13 +14,13 @@ export class StatementService {
     getAllById(id: string) {
         return this.prismaService.statement.findMany({ where: { userId: id } });
     }
-    getAllUsersByLesson(userId: string, lessonId: string) {
-        return this.prismaService.statement.findMany({
-            where: {
-                lessonId: lessonId,
-            },
+    async getAllUsersByLesson(lessonId: string) {
+        const users = await this.prismaService.statement.findMany({
+            where: { lessonId },
         });
+        return users;
     }
+
     getByUserIdAndLessonId(userId: string, lessonId: string) {
         return this.prismaService.statement.findUniqueOrThrow({
             where: {
