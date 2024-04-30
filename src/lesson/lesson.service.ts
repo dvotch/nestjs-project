@@ -9,10 +9,11 @@ export class LessonService {
     getAll() {
         return this.prismaService.lessons.findMany();
     }
-    getMyLessonsGroup(group: number) {
-        return this.prismaService.lessons.findMany({
-            where: { group: group },
+    async getMyLessonsGroup(group: number) {
+        const lessons = await this.prismaService.lessons.findMany({
+            where: { group },
         });
+        return lessons;
     }
     getAllByUserId(id: string) {
         return this.prismaService.lessons.findMany({
