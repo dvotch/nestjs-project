@@ -14,7 +14,7 @@ export class PortfolioService {
 
     async getAllById(userId: string, page: string) {
         const portfolios = await this.prismaService.portfolio.findMany({ where: { userId } });
-        const returnData = portfolios.slice(+page - 1, 2).map((elem) => {
+        const returnData = portfolios.slice(+page * 2, +page * 2 + 2).map((elem) => {
             return { ...elem, photo: bufferToDataUrl('image/png', elem.photo) };
         });
         return {
