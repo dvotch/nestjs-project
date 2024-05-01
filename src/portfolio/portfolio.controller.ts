@@ -58,7 +58,7 @@ export class PortfolioController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
-    @Delete(':/id')
+    @Delete('/:id')
     deletePortfolio(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
         return this.portfolioService.delete(id, user.id);
     }
