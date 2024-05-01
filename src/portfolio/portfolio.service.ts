@@ -20,7 +20,7 @@ export class PortfolioService {
         return {
             data: returnData,
             meta: {
-                totalPage: (await this.prismaService.portfolio.findMany({ where: { userId } })).length,
+                totalPage: portfolios.length,
             },
         };
     }
