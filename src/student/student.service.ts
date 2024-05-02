@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '@prisma/prisma.service';
 
 import { CreditService } from 'src/credit/credit.service';
 import { LessonService } from 'src/lesson/lesson.service';
@@ -6,6 +7,7 @@ import { MarkService } from 'src/mark/mark.service';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 import { PortfolioService } from 'src/portfolio/portfolio.service';
 import { StatementService } from 'src/statement/statement.service';
+import { PostOrganizationDto } from './dto/postOrganization.dto';
 
 @Injectable()
 export class StudentService {
@@ -15,8 +17,8 @@ export class StudentService {
 
         private readonly statementService: StatementService,
         private readonly markService: MarkService,
-        private readonly organizationsService: OrganizationsService,
         private readonly portfolioService: PortfolioService,
+        private readonly prismaService: PrismaService,
     ) {}
 
     async getMyLessons(id: string, quater: number) {
@@ -39,7 +41,27 @@ export class StudentService {
     }
 
     async getMyOrganization(id: string) {
-        return this.organizationsService.getAllByUserId(id);
+        const organizations = await this.prismaService.usersOrganization.findMany({ where: { userId: id } });
+        const returnData = organizations.map(async (elem) => {
+            const organization = await this.prismaService.organizations.findUnique({
+                where: { id: elem.organizationId },
+            });
+            return {
+                name: organization.name,
+                id: elem.id,
+                description: organization.description,
+            };
+        });
+        return returnData;
+    }
+
+    async sendApplication(id: string, dto: PostOrganizationDto) {
+        return this.prismaService.usersOrganization.create({
+            data: {
+                userId: id,
+                ...dto,
+            },
+        });
     }
     async getMyPortfolio(userId: string, page: string) {
         return this.portfolioService.getAllById(userId, page);

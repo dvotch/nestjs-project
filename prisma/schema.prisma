@@ -24,8 +24,6 @@ model User {
   email String @unique
   group Int?
   avatar Bytes?
-  organization Organizations? @relation(fields: [organizationId], references: [id], onDelete:  SetNull)
-  organizationId String?
   specialization Specializations? @relation(fields: [specializationId], references: [id]) 
   specializationId String
   createdAt DateTime @default(now()) @map("created_at")
@@ -36,7 +34,17 @@ model User {
   lesson Lessons[]
   statement Statement[]
   credit Credits[]
+  usersOrganization UsersOrganization[]
   @@map("users")
+}
+
+model UsersOrganization{
+  id String @id @default(uuid())
+  organization Organizations? @relation(fields: [organizationId], references: [id], onDelete:  Cascade)
+  organizationId String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  status Boolean
 }
 
 model Token {
@@ -53,7 +61,7 @@ model Organizations{
   name String
   description String
   logo Bytes
-  user User[]
+  usersOrganization UsersOrganization[]
   @@map("organizators")
 }
 
