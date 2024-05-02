@@ -60,7 +60,6 @@ export class AuthService {
                 id: user.id,
                 email: user.email,
                 roles: user.roles,
-                organizationId: user.organizationId,
                 specialization: specialization.name,
                 group: user.group,
                 name: user.name,

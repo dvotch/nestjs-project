@@ -1,10 +1,11 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { StudentService } from './student.service';
 import { CurrentUser, Roles } from '@common/decorators';
 import { JwtPayload } from '@auth/interfaces';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Role } from '@prisma/client';
+import { PostOrganizationDto } from './dto/postOrganization.dto';
 
 @ApiTags('Student')
 @ApiBearerAuth('JWT-auth')
@@ -37,7 +38,14 @@ export class StudentController {
     @Roles(Role.STUDENT)
     @Get('/organization')
     getMyOrganization(@CurrentUser() user: JwtPayload) {
-        return this.studentService.getMyOrganization(user.organizationId);
+        return this.studentService.getMyOrganization(user.id);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
+    @Post('/organization')
+    sendApplication(@CurrentUser() user: JwtPayload, @Body() dto: PostOrganizationDto) {
+        return this.studentService.sendApplication(user.id, dto);
     }
 
     @UseGuards(RolesGuard)
