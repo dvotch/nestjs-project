@@ -52,7 +52,7 @@ export class StudentService {
                 description: organization.description,
             };
         });
-        return returnData;
+        return Promise.all(returnData);
     }
 
     async sendApplication(id: string, dto: PostOrganizationDto) {
