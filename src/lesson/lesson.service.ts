@@ -9,9 +9,9 @@ export class LessonService {
     getAll() {
         return this.prismaService.lessons.findMany();
     }
-    async getMyLessonsGroup(userId: string, group: number) {
+    async getMyLessonsGroup(Id: string, group: number) {
         const lessons = await this.prismaService.lessons.findMany({
-            where: { userId: userId, group: group },
+            where: { userId: Id, group: group },
         });
         return lessons;
     }
