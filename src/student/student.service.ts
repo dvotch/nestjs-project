@@ -8,6 +8,7 @@ import { OrganizationsService } from 'src/organizations/organizations.service';
 import { PortfolioService } from 'src/portfolio/portfolio.service';
 import { StatementService } from 'src/statement/statement.service';
 import { PostOrganizationDto } from './dto/postOrganization.dto';
+import bufferToDataUrl from 'buffer-to-data-url';
 
 @Injectable()
 export class StudentService {
@@ -41,7 +42,9 @@ export class StudentService {
     }
 
     async getMyOrganization(id: string) {
-        const organizations = await this.prismaService.usersOrganization.findMany({ where: { userId: id } });
+        const organizations = await this.prismaService.usersOrganization.findMany({
+            where: { userId: id, status: true },
+        });
         const returnData = organizations.map(async (elem) => {
             const organization = await this.prismaService.organizations.findUnique({
                 where: { id: elem.organizationId },
@@ -50,6 +53,7 @@ export class StudentService {
                 name: organization.name,
                 id: elem.id,
                 description: organization.description,
+                photo: bufferToDataUrl('image/png', organization.logo),
             };
         });
         return Promise.all(returnData);
