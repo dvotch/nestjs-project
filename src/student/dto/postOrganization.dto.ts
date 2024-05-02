@@ -17,4 +17,5 @@ export class PostOrganizationDto implements UsersOrganization {
         default: '-',
     })
     organizationId: string;
+    status: boolean;
 }
