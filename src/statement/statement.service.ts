@@ -29,12 +29,10 @@ export class StatementService {
     }
 
     getByUserIdAndLessonId(userId: string, lessonId: string) {
-        return this.prismaService.statement.findUniqueOrThrow({
+        return this.prismaService.statement.findFirst({
             where: {
-                userId_lessonId: {
-                    userId,
-                    lessonId,
-                },
+                userId: userId,
+                lessonId: lessonId,
             },
         });
     }
