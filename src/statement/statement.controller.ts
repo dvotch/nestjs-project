@@ -29,6 +29,17 @@ export class StatementController {
     }
 
     @UseGuards(RolesGuard)
+    @Roles(Role.TEACHER)
+    @Get('/teacher/:lessonId/:userId')
+    getAllStatementByLesson(
+        @CurrentUser() user: JwtPayload,
+        @Param('lessonId') lessonId: string,
+        @Param('userId') userId: string,
+    ) {
+        return this.statementService.getAllStatementByLesson(lessonId, userId);
+    }
+
+    @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
     @Get()
     getAllStatements() {
