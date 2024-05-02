@@ -20,6 +20,12 @@ export class StatementService {
         });
         return users;
     }
+    async getAllStatementByLesson(lessonId: string, userId: string) {
+        const users = await this.prismaService.statement.findMany({
+            where: { lessonId: lessonId, userId: userId },
+        });
+        return users;
+    }
 
     getByUserIdAndLessonId(userId: string, lessonId: string) {
         return this.prismaService.statement.findUniqueOrThrow({
