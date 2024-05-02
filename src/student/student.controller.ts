@@ -38,7 +38,7 @@ export class StudentController {
     @Roles(Role.STUDENT)
     @Get('/organization')
     getMyOrganization(@CurrentUser() user: JwtPayload) {
-        return this.studentService.getMyOrganization(user.organizationId);
+        return this.studentService.getMyOrganization(user.id);
     }
 
     @UseGuards(RolesGuard)
