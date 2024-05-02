@@ -23,8 +23,8 @@ export class LessonController {
     @UseGuards(RolesGuard)
     @Roles(Role.TEACHER)
     @Get('/teacher/:group')
-    getMyLessonsGroup(@CurrentUser() user: JwtPayload, @Param('group') group: number) {
-        return this.lessonService.getMyLessonsGroup(group);
+    getMyLessonsGroup(@CurrentUser() user: JwtPayload, @Param('group') group: string) {
+        return this.lessonService.getMyLessonsGroup(user.id, group);
     }
 
     @UseGuards(RolesGuard)
