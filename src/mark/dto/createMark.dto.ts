@@ -23,7 +23,7 @@ export class CreateMarkDto implements Marks {
         default: '5',
         type: 'number',
     })
-    mark: number;
+    mark: string;
 
     @IsUUID()
     @ApiProperty({
