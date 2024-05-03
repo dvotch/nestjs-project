@@ -58,7 +58,9 @@ export class MarkService {
         const marksAsNumbers = allMarks
             .filter((mark) => mark.mark !== 'Н' && mark.mark !== 'Н/Б')
             .map((mark) => parseInt(mark.mark, 10));
-
+        if (marksAsNumbers.length === 0) {
+            return 0;
+        }
         const totalMarks = marksAsNumbers.reduce((acc, curr) => acc + curr, 0);
         const averageMark = totalMarks / marksAsNumbers.length;
 
