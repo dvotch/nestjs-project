@@ -24,16 +24,15 @@ export class StatementService {
         const users = await this.prismaService.statement.findMany({
             where: { lessonId: lessonId, userId: userId },
         });
-        return users;
+        const userIds = users.map((user) => user.id);
+        return userIds;
     }
 
     getByUserIdAndLessonId(userId: string, lessonId: string) {
-        return this.prismaService.statement.findUniqueOrThrow({
+        return this.prismaService.statement.findFirst({
             where: {
-                userId_lessonId: {
-                    userId,
-                    lessonId,
-                },
+                userId: userId,
+                lessonId: lessonId,
             },
         });
     }
