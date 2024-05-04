@@ -12,12 +12,12 @@ export class OrganizationsService {
     getAllByUserId(id: string) {
         return this.prismaService.organizations.findMany({ where: { id } });
     }
-    create(dto: CreateOrganizations) {
+    create(dto: CreateOrganizations, logo: Express.Multer.File) {
         return this.prismaService.organizations.create({
             data: {
                 name: dto.name,
                 description: dto.description,
-                logo: dto.logo,
+                logo: logo.buffer,
             },
         });
     }
