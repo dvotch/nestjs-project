@@ -46,4 +46,11 @@ export class MarkController {
     async getStudentMarks(@Param('user') userId: string, @Param('lesson') lessonId: string) {
         return this.markService.getStudentMarks(userId, lessonId);
     }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.TEACHER)
+    @Get('averageMarks/:lesson/:user')
+    async getAverageMark(@Param('user') userId: string, @Param('lesson') lessonId: string) {
+        return this.markService.getAverageMark(userId, lessonId);
+    }
 }
