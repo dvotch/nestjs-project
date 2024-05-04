@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { StudentService } from './student.service';
 import { CurrentUser, Roles } from '@common/decorators';
@@ -46,6 +46,13 @@ export class StudentController {
     @Post('/organization')
     sendApplication(@CurrentUser() user: JwtPayload, @Body() dto: PostOrganizationDto) {
         return this.studentService.sendApplication(user.id, dto);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
+    @Delete('/organization/:id')
+    leaveFromOrganization(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+        return this.studentService.leaveFromOrganization(id, user.id);
     }
 
     @UseGuards(RolesGuard)

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 
 import { CreditService } from 'src/credit/credit.service';
@@ -73,5 +73,13 @@ export class StudentService {
     async getStudentMarks(userId: string, lessonId: string) {
         const statementId = this.statementService.getByUserIdAndLessonId(userId, lessonId);
         return this.markService.getAllById((await statementId).id);
+    }
+
+    async leaveFromOrganization(id: string, myId: string) {
+        const userOrganization = await this.prismaService.usersOrganization.findFirstOrThrow({
+            where: { id, userId: myId },
+        });
+        if (!userOrganization) throw new NotFoundException('Запись не найдена');
+        return this.prismaService.usersOrganization.delete({ where: { id } });
     }
 }
