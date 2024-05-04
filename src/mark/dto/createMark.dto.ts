@@ -21,7 +21,7 @@ export class CreateMarkDto implements Marks {
         description: 'Оценка',
         required: true,
         default: '5',
-        type: 'number',
+        type: 'string',
     })
     mark: string;
 
