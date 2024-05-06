@@ -76,6 +76,10 @@ export class UserService {
         });
     }
 
+    update(id: string, user: Partial<CreateUserDto>) {
+        return this.prismaService.user.update({ where: { id }, data: { ...user } });
+    }
+
     async getMyLogo(id: string) {
         const user = await this.prismaService.user.findUnique({
             where: {

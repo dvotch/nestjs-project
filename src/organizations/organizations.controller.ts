@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 
 import { CreateOrganizations } from './dto';
 import { OrganizationsService } from './organizations.service';
@@ -7,6 +18,7 @@ import { Public, Roles } from '@common/decorators';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Role } from '@prisma/client';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Organization')
 @Controller('organizations')
@@ -23,9 +35,10 @@ export class OrganizationsController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
+    @UseInterceptors(FileInterceptor('logo'))
     @Post()
-    createOrganizations(@Body() dto: CreateOrganizations) {
-        return this.organizationsService.create(dto);
+    createOrganizations(@Body() dto: CreateOrganizations, @UploadedFile() file: Express.Multer.File) {
+        return this.organizationsService.create(dto, file);
     }
 
     @UseGuards(RolesGuard)

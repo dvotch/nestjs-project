@@ -18,4 +18,5 @@ export class PostOrganizationDto implements UsersOrganization {
     })
     organizationId: string;
     status: boolean;
+    whyYouText: string;
 }

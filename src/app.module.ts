@@ -13,6 +13,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { LessonModule } from './lesson/lesson.module';
 import { CreditModule } from './credit/credit.module';
 import { StudentModule } from './student/student.module';
+import { AdmModule } from './adm/adm.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { StudentModule } from './student/student.module';
         LessonModule,
         CreditModule,
         StudentModule,
+        AdmModule,
     ],
     providers: [
         {

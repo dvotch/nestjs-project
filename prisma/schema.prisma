@@ -45,6 +45,7 @@ model UsersOrganization{
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
   status Boolean
+  whyYouText String @default("")
 }
 
 model Token {
