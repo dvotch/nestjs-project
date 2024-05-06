@@ -28,6 +28,13 @@ export class MarkController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.TEACHER)
+    @Get('/:day/:statement')
+    async getMarkId(@Param('day') day: string, @Param('statement') statementId: string) {
+        return this.markService.getMarkId(new Date(day), statementId);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.TEACHER)
     @Put('/:id')
     updateMark(@Param('id') id: string, @Body() dto: UpdateMarkDto) {
         return this.markService.update(id, dto);
