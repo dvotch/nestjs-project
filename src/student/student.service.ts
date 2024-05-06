@@ -114,7 +114,10 @@ export class StudentService {
 
         const works = [];
         const learns = [];
-        features.forEach((elem) => (elem.work ? works.push(elem) : learns.push(elem)));
+        features.forEach((elem) => {
+            const { work, specializationId } = elem;
+            work ? works.push(elem) : learns.push(elem);
+        });
 
         return { works, learns };
     }
