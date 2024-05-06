@@ -76,7 +76,7 @@ export class UserService {
         });
     }
 
-    update(id: string, user: Partial<User>) {
+    update(id: string, user: Partial<CreateUserDto>) {
         return this.prismaService.user.update({ where: { id }, data: { ...user } });
     }
 
