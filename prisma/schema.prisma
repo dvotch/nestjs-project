@@ -25,7 +25,7 @@ model User {
   group Int?
   avatar Bytes?
   specialization Specializations? @relation(fields: [specializationId], references: [id]) 
-  specializationId String
+  specializationId String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   roles Role[] @default([STUDENT])

@@ -25,6 +25,11 @@ export class MarkService {
             data: { ...dto },
         });
     }
+    async getMarkId(day: Date, statementId: string) {
+        const marks = await this.prismaService.marks.findMany();
+        const mark = marks.find((mark) => mark.statementId === statementId && mark.date === day);
+        return mark.id;
+    }
 
     async update(id: string, dto: UpdateMarkDto) {
         const mark = this.prismaService.marks.findUnique({
