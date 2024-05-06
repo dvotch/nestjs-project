@@ -26,13 +26,13 @@ export class MarkService {
         });
     }
     async getMarkId(day: Date, statementId: string) {
-        const mark = await this.prismaService.marks.findMany({
+        const mark = await this.prismaService.marks.findFirst({
             where: {
                 date: day,
                 statementId: statementId,
             },
         });
-        return mark;
+        return mark.id;
     }
 
     async update(id: string, dto: UpdateMarkDto) {
