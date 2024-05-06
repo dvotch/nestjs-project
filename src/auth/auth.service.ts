@@ -60,7 +60,7 @@ export class AuthService {
                 id: user.id,
                 email: user.email,
                 roles: user.roles,
-                specialization: specialization.name || null,
+                specialization: specialization?.name || null,
                 group: user.group,
                 name: user.name,
                 surname: user.surname,
