@@ -28,7 +28,7 @@ export class MarkService {
     async getMarkId(day: Date, statementId: string) {
         const marks = await this.prismaService.marks.findMany();
         const mark = marks.find((mark) => mark.statementId === statementId && mark.date === day);
-        return mark.id;
+        return mark;
     }
 
     async update(id: string, dto: UpdateMarkDto) {
