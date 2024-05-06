@@ -20,6 +20,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Role, User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('User')
