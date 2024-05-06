@@ -28,7 +28,7 @@ export class MarkService {
             },
         });
         if (dto.mark === '0') {
-            return this.prismaService.marks.delete({ where: { id: dto.id } });
+            return this.prismaService.marks.delete({ where: { id: mark.id } });
         }
         if (!mark) {
             return this.prismaService.marks.create({ data: { ...dto } });
