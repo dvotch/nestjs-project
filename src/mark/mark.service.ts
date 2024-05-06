@@ -26,8 +26,12 @@ export class MarkService {
         });
     }
     async getMarkId(day: Date, statementId: string) {
-        const marks = await this.prismaService.marks.findMany();
-        const mark = marks.find((mark) => mark.statementId === statementId && mark.date === day);
+        const mark = await this.prismaService.marks.findMany({
+            where: {
+                date: day,
+                statementId: statementId,
+            },
+        });
         return mark;
     }
 
