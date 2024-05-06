@@ -29,8 +29,8 @@ export class MarkController {
     @UseGuards(RolesGuard)
     @Roles(Role.TEACHER)
     @Get('/:day/:statement')
-    async getMarkId(@Param('day') day: string, @Param('statement') statementId: string) {
-        return this.markService.getMarkId(new Date(day), statementId);
+    async getMarkId(@Param('day') day: Date, @Param('statement') statementId: string) {
+        return this.markService.getMarkId(day, statementId);
     }
 
     @UseGuards(RolesGuard)
