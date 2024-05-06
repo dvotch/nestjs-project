@@ -7,6 +7,7 @@ import {
     Param,
     ParseUUIDPipe,
     Post,
+    Put,
     UploadedFile,
     UseGuards,
     UseInterceptors,
@@ -18,7 +19,7 @@ import { JwtPayload } from '@auth/interfaces';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { RolesGuard } from '@auth/guards/role.guard';
-import { Role } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('User')
@@ -56,6 +57,14 @@ export class UserController {
     async createUser(@Body() dto: CreateUserDto) {
         const user = await this.userService.save(dto);
         return new UserResponse(user);
+    }
+
+    @UseInterceptors(ClassSerializerInterceptor)
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
+    @Put('/:id')
+    updateUser(@Param('id') id: string, @Body() dto: Partial<User>) {
+        return this.userService.update(id, dto);
     }
 
     @UseInterceptors(ClassSerializerInterceptor)
