@@ -115,7 +115,9 @@ export class StudentService {
         const works = [];
         const learns = [];
         features.forEach((elem) => {
-            const { work, specializationId } = elem;
+            const { work } = elem;
+            delete elem.work;
+            delete elem.specializationId;
             work ? works.push(elem) : learns.push(elem);
         });
 
