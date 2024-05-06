@@ -63,7 +63,7 @@ export class UserController {
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
     @Put('/:id')
-    updateUser(@Param('id') id: string, @Body() dto: Partial<User>) {
+    updateUser(@Param('id') id: string, @Body() dto: Partial<CreateUserDto>) {
         return this.userService.update(id, dto);
     }
 
