@@ -37,6 +37,10 @@ export class StudentService {
         return lessons;
     }
 
+    getLessonById(id: string) {
+        return this.prismaService.lessons.findUnique({ where: { id } });
+    }
+
     async getMyCredits(id: string) {
         return this.creditService.getByUserId(id);
     }
