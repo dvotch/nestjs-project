@@ -105,4 +105,17 @@ export class StudentService {
         if (!userOrganization) throw new NotFoundException('Запись не найдена');
         return this.prismaService.usersOrganization.delete({ where: { id } });
     }
+
+    async getMyFuture(id: string) {
+        const user = await this.prismaService.user.findUnique({ where: { id } });
+        const features = await this.prismaService.future.findMany({
+            where: { specializationId: user.specializationId },
+        });
+
+        const works = [];
+        const learns = [];
+        features.forEach((elem) => (elem.work ? works.push(elem) : learns.push(elem)));
+
+        return { works, learns };
+    }
 }

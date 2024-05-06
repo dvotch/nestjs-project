@@ -75,4 +75,11 @@ export class StudentController {
     getMyPortfolio(@CurrentUser() user: JwtPayload, @Query('page') page: string) {
         return this.studentService.getMyPortfolio(user.id, page);
     }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
+    @Get('/future')
+    getMyFuture(@CurrentUser() user: JwtPayload) {
+        return this.studentService.getMyFuture(user.id);
+    }
 }

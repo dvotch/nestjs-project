@@ -141,12 +141,13 @@ model Future{
   name String
   place String
   cost Int
-  description String
-  phone String
+  description String?
+  phone String?
   url String
-  photo Bytes
+  photo Bytes?
   specialization Specializations @relation(fields: [specializationId], references: [id], onDelete: NoAction)
   specializationId String
+  work Boolean
   @@map("future")
 }
 
