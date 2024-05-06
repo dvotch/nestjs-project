@@ -29,7 +29,7 @@ export class StudentController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
-    @Get('lesson/:id')
+    @Get('user/:id')
     getTeacher(@Param('id') id: string) {
         return this.studentService.getTeacherById(id);
     }
