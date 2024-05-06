@@ -20,19 +20,33 @@ export class MarkService {
         });
     }
 
-    create(dto: CreateMarkDto) {
-        return this.prismaService.marks.create({
-            data: { ...dto },
+    async create(dto: CreateMarkDto) {
+        const mark = await this.prismaService.marks.findFirst({
+            where: {
+                date: dto.date,
+                statementId: dto.statementId,
+            },
+        });
+
+        if (!mark) {
+            return this.prismaService.marks.create({ data: { ...dto } });
+        }
+
+        return this.prismaService.marks.update({
+            where: { id: mark.id },
+            data: {
+                mark: dto.mark,
+            },
         });
     }
     async getMarkId(day: Date, statementId: string) {
-        const mark = await this.prismaService.marks.findMany({
+        const mark = await this.prismaService.marks.findFirst({
             where: {
                 date: day,
                 statementId: statementId,
             },
         });
-        return mark;
+        return mark.id;
     }
 
     async update(id: string, dto: UpdateMarkDto) {
