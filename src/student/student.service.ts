@@ -50,6 +50,7 @@ export class StudentService {
                 createdAt: false,
                 dateOfReceipt: false,
                 updatedAt: false,
+                token: false,
                 name: true,
                 surname: true,
                 patronymic: true,
