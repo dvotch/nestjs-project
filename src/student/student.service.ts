@@ -42,7 +42,21 @@ export class StudentService {
     }
 
     getTeacherById(id: string) {
-        return this.prismaService.user.findUnique({ where: { id } });
+        return this.prismaService.user.findUnique({
+            where: { id },
+            select: {
+                avatar: false,
+                password: false,
+                createdAt: false,
+                dateOfReceipt: false,
+                updatedAt: false,
+                name: true,
+                surname: true,
+                patronymic: true,
+                email: true,
+                phoneNumber: true,
+            },
+        });
     }
 
     async getMyCredits(id: string) {
