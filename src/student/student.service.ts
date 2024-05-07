@@ -118,7 +118,7 @@ export class StudentService {
             const { work } = elem;
             delete elem.work;
             delete elem.specializationId;
-            work ? works.push(elem) : learns.push(elem);
+            work ? works.push(elem) : learns.push({ ...elem, photo: bufferToDataUrl('image/png', elem.photo) });
         });
 
         return { works, learns };
