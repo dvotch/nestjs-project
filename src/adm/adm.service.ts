@@ -19,10 +19,10 @@ export class AdmService {
     }
 
     createFuture(dto: CreateFutureDto, photo: Express.Multer.File) {
-        console.log(dto);
+        const work = dto.work.toString() === 'true' ? true : false;
 
         return this.prismaService.future.create({
-            data: { ...dto, photo: photo.buffer, work: Boolean(dto.work), cost: +dto.cost },
+            data: { ...dto, photo: photo.buffer, work: work, cost: +dto.cost },
         });
     }
 
