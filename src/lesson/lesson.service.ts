@@ -20,6 +20,13 @@ export class LessonService {
             where: { userId: id },
         });
     }
+    async getGroupByUserId(id: string) {
+        const abc = await this.prismaService.lessons.findMany({
+            where: { userId: id },
+        });
+        const group = abc.map((lessons) => lessons.group);
+        return group;
+    }
     getById(id: string) {
         return this.prismaService.lessons.findUnique({
             where: { id },
