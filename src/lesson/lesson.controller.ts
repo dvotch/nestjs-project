@@ -22,7 +22,7 @@ export class LessonController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.TEACHER)
-    @Get('/teacher/group')
+    @Get('/teacher/my/group')
     getGroupByUserId(@CurrentUser() user: JwtPayload) {
         return this.lessonService.getGroupByUserId(user.id);
     }
