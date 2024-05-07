@@ -1,6 +1,17 @@
 import { RolesGuard } from '@auth/guards/role.guard';
 import { Roles } from '@common/decorators';
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
@@ -8,6 +19,7 @@ import { CreateMarkDto } from 'src/mark/dto';
 import { AcceptApplicationDto } from './dto/acceptApplication.dto';
 import { AdmService } from './adm.service';
 import { CreateFutureDto } from './dto/createFuture.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Adm')
 @Controller('adm')
@@ -31,9 +43,10 @@ export class AdmController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
+    @UseInterceptors(FileInterceptor('photo'))
     @Post('/future')
-    createFeature(@Body() dto: CreateFutureDto) {
-        return this.admService.createFuture(dto);
+    createFeature(@Body() dto: CreateFutureDto, @UploadedFile() photo: Express.Multer.File) {
+        return this.admService.createFuture(dto, photo);
     }
 
     @UseGuards(RolesGuard)
