@@ -29,6 +29,13 @@ export class StudentController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
+    @Get('user/:id')
+    getTeacher(@Param('id') id: string) {
+        return this.studentService.getTeacherById(id);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
     @Get('/marks/:lesson')
     async getStudentMarks(@CurrentUser() user: JwtPayload, @Param('lesson') lessonId: string) {
         return this.studentService.getStudentMarks(user.id, lessonId);
@@ -67,5 +74,12 @@ export class StudentController {
     @Get('/portfolio')
     getMyPortfolio(@CurrentUser() user: JwtPayload, @Query('page') page: string) {
         return this.studentService.getMyPortfolio(user.id, page);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
+    @Get('/future')
+    getMyFuture(@CurrentUser() user: JwtPayload) {
+        return this.studentService.getMyFuture(user.id);
     }
 }

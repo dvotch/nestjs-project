@@ -41,6 +41,25 @@ export class StudentService {
         return this.prismaService.lessons.findUnique({ where: { id } });
     }
 
+    getTeacherById(id: string) {
+        return this.prismaService.user.findUnique({
+            where: { id },
+            select: {
+                avatar: false,
+                password: false,
+                createdAt: false,
+                dateOfReceipt: false,
+                updatedAt: false,
+                token: false,
+                name: true,
+                surname: true,
+                patronymic: true,
+                email: true,
+                phoneNumber: true,
+            },
+        });
+    }
+
     async getMyCredits(id: string) {
         return this.creditService.getByUserId(id);
     }
@@ -85,5 +104,24 @@ export class StudentService {
         });
         if (!userOrganization) throw new NotFoundException('Запись не найдена');
         return this.prismaService.usersOrganization.delete({ where: { id } });
+    }
+
+    async getMyFuture(id: string) {
+        const user = await this.prismaService.user.findUnique({ where: { id } });
+        const features = await this.prismaService.future.findMany({
+            where: { specializationId: user.specializationId },
+        });
+
+        const works = [];
+        const learns = [];
+        features.forEach((elem) => {
+            const { work } = elem;
+            delete elem.work;
+            delete elem.specializationId;
+            const photo = elem.photo !== null ? elem.photo : Buffer.from('');
+            work ? works.push(elem) : learns.push({ ...elem, photo: bufferToDataUrl('image/png', photo) });
+        });
+
+        return { works, learns };
     }
 }

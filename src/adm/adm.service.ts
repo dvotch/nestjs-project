@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma/prisma.service';
 import { AcceptApplicationDto } from './dto/acceptApplication.dto';
+import { CreateFutureDto } from './dto/createFuture.dto';
 
 @Injectable()
 export class AdmService {
@@ -15,5 +16,21 @@ export class AdmService {
 
     getAllUsersOrganization() {
         return this.prismaService.usersOrganization.findMany();
+    }
+
+    createFuture(dto: CreateFutureDto, photo: Express.Multer.File) {
+        const work = dto.work.toString() === 'true' ? true : false;
+
+        return this.prismaService.future.create({
+            data: { ...dto, photo: photo.buffer, work: work, cost: +dto.cost },
+        });
+    }
+
+    deleteFuture(id: string) {
+        return this.prismaService.future.delete({ where: { id } });
+    }
+
+    getAllFutures() {
+        return this.prismaService.future.findMany();
     }
 }
