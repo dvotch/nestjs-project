@@ -18,8 +18,8 @@ export class AdmService {
         return this.prismaService.usersOrganization.findMany();
     }
 
-    createFuture(dto: CreateFutureDto) {
-        return this.prismaService.future.create({ data: { ...dto } });
+    createFuture(dto: CreateFutureDto, photo: Express.Multer.File) {
+        return this.prismaService.future.create({ data: { ...dto, photo: photo.buffer } });
     }
 
     deleteFuture(id: string) {
