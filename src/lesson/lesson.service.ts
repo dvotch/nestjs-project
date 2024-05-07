@@ -25,7 +25,9 @@ export class LessonService {
             where: { userId: id },
         });
         const group = abc.map((lessons) => lessons.group);
-        return group;
+        const uniqueGroups = group.filter((value, index, self) => self.indexOf(value) === index);
+
+        return uniqueGroups;
     }
     getById(id: string) {
         return this.prismaService.lessons.findUnique({
