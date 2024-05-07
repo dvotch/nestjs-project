@@ -91,7 +91,7 @@ export class UserController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles(Role.RESOURCES_DEPARTMENT)
+    @Roles(Role.TEACHER)
     @Get()
     getAll() {
         return this.userService.getAll();
