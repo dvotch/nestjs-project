@@ -14,10 +14,11 @@ export class endMarkService {
         return this.prismaService.endMark.findMany();
     }
 
-    getAllById(id: string) {
-        return this.prismaService.endMark.findMany({
+    async getAllById(id: string) {
+        const adm = await this.prismaService.endMark.findFirst({
             where: { statementId: id },
         });
+        return adm.endMark;
     }
 
     async create(dto: CreateEndMarkDto) {
