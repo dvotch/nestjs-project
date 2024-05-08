@@ -35,6 +35,7 @@ model User {
   statement Statement[]
   credit Credits[]
   usersOrganization UsersOrganization[]
+  endMark EndMark[]
   @@map("users")
 }
 
@@ -93,6 +94,7 @@ model Lessons{
   dateEnd DateTime @default("2025-09-05T20:16:12.924Z") @map("date_end")
   statement Statement[]
   credit Credits[]
+  endMark EndMark[]
   @@map("lessons")
 }
 model Statement{
@@ -103,7 +105,7 @@ model Statement{
   lessonId String
   quater Int
   mark Marks[]
-  endMark EndMark[]
+  
   @@unique(fields: [userId, lessonId])
   @@map("statement")
 }
@@ -131,8 +133,10 @@ model Marks{
 
 model EndMark{
   id    String    @id @default(uuid())
-  statement Statement @relation(fields: [statementId], references: [id], onDelete: Cascade)
-  statementId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  lesson Lessons @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId String
   endMark String
   
   @@map("endMark")

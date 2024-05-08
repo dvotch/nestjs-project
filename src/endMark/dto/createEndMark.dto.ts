@@ -18,10 +18,18 @@ export class CreateEndMarkDto implements EndMark {
 
     @IsUUID()
     @ApiProperty({
-        description: 'Ссылка на ведомость',
+        description: 'Ссылка на юзера',
         required: true,
         default: '5560baef-302a-4e8b-a101-758e45d31fd7',
         type: 'string',
     })
-    statementId: string;
+    userId: string;
+    @IsUUID()
+    @ApiProperty({
+        description: 'Ссылка на урок',
+        required: true,
+        default: '5560baef-302a-4e8b-a101-758e45d31fd7',
+        type: 'string',
+    })
+    lessonId: string;
 }

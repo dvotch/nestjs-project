@@ -19,15 +19,19 @@ export class endMarkService {
             where: { userId: userId, lessonId: lessonId },
         });
         const adm = await this.prismaService.endMark.findFirst({
-            where: { statementId: statementId.id },
+            where: { userId: userId, lessonId: lessonId },
         });
         return adm.endMark;
     }
 
     async create(dto: CreateEndMarkDto) {
+        const statementId = await this.prismaService.statement.findFirst({
+            where: { userId: dto.userId, lessonId: dto.lessonId },
+        });
         const endMark = await this.prismaService.endMark.findFirst({
             where: {
-                statementId: dto.statementId,
+                userId: dto.userId,
+                lessonId: dto.lessonId,
             },
         });
         if (dto.endMark === '0') {
