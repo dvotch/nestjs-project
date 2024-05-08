@@ -19,7 +19,7 @@ export class CreateEndMarkDto implements EndMark {
     @IsUUID()
     @ApiProperty({
         description: 'Ссылка на юзера',
-        required: true,
+        required: false,
         default: '5560baef-302a-4e8b-a101-758e45d31fd7',
         type: 'string',
     })
@@ -27,7 +27,7 @@ export class CreateEndMarkDto implements EndMark {
     @IsUUID()
     @ApiProperty({
         description: 'Ссылка на урок',
-        required: true,
+        required: false,
         default: '5560baef-302a-4e8b-a101-758e45d31fd7',
         type: 'string',
     })
