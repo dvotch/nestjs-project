@@ -106,7 +106,11 @@ export class StudentService {
         const statementId = await this.statementService.getByUserIdAndLessonId(userId, lessonId);
         const marks = await this.markService.getAllById(statementId.id);
         console.log(marks);
-        console.log(marks.filter((elem) => isNumeric(elem)));
+        const filtered = marks.filter((elem) => {
+            const isNum = isNumeric(elem);
+            console.log(isNum);
+        });
+        console.log();
         return marks.reduce((acc, elem) => acc + +elem.mark, 0) / marks.length;
     }
 
