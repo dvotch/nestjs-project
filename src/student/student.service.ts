@@ -105,13 +105,12 @@ export class StudentService {
         }
         const statementId = await this.statementService.getByUserIdAndLessonId(userId, lessonId);
         const marks = await this.markService.getAllById(statementId.id);
-        console.log(marks);
         const filtered = marks.filter((elem) => {
-            const isNum = isNumeric(elem);
+            const isNum = isNumeric(elem.mark);
             console.log(isNum);
+            return isNum;
         });
-        console.log();
-        return marks.reduce((acc, elem) => acc + +elem.mark, 0) / marks.length;
+        return filtered.reduce((acc, elem) => acc + +elem.mark, 0) / marks.length;
     }
 
     async leaveFromOrganization(id: string, myId: string) {
