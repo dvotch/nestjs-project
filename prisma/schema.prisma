@@ -103,6 +103,7 @@ model Statement{
   lessonId String
   quater Int
   mark Marks[]
+  endMark EndMark[]
   @@unique(fields: [userId, lessonId])
   @@map("statement")
 }
@@ -126,6 +127,15 @@ model Marks{
   mark String
   date DateTime
   @@map("marks")
+}
+
+model EndMark{
+  id    String    @id @default(uuid())
+  statement Statement @relation(fields: [statementId], references: [id], onDelete: Cascade)
+  statementId String
+  endMark String
+  
+  @@map("endMark")
 }
 
 model Specializations{
