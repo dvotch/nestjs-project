@@ -14,9 +14,12 @@ export class endMarkService {
         return this.prismaService.endMark.findMany();
     }
 
-    async getAllById(id: string) {
+    async getAllById(userId: string, lessonId: string) {
+        const statementId = await this.prismaService.statement.findFirst({
+            where: { userId: userId, lessonId: lessonId },
+        });
         const adm = await this.prismaService.endMark.findFirst({
-            where: { statementId: id },
+            where: { statementId: statementId.id },
         });
         return adm.endMark;
     }

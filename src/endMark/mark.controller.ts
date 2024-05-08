@@ -28,9 +28,9 @@ export class endMarkController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.TEACHER)
-    @Get('/mark/:statement')
-    async getAllById(@Param('statement') statementId: string) {
-        return this.markService.getAllById(statementId);
+    @Get('/mark/:userId/:lessonId')
+    async getAllById(@Param('userId') userId: string, @Param('lessonId') lessonId: string) {
+        return this.markService.getAllById(userId, lessonId);
     }
 
     // @UseGuards(RolesGuard)
