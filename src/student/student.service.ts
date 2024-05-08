@@ -100,7 +100,8 @@ export class StudentService {
 
     async getAverageMark(userId: string, lessonId: string) {
         const statementId = await this.statementService.getByUserIdAndLessonId(userId, lessonId);
-        const marks = (await this.markService.getAllById(statementId.id)).filter((elem) => +elem);
+        const marks = (await this.markService.getAllById(statementId.id)).filter((elem) => !isNaN(+elem));
+        console.log(marks);
         return marks.reduce((acc, elem) => acc + +elem.mark, 0) / marks.length;
     }
 
