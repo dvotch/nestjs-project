@@ -9,6 +9,7 @@ import { PortfolioService } from 'src/portfolio/portfolio.service';
 import { StatementService } from 'src/statement/statement.service';
 import { PostOrganizationDto } from './dto/postOrganization.dto';
 import bufferToDataUrl from 'buffer-to-data-url';
+import { isNumber } from 'class-validator';
 
 @Injectable()
 export class StudentService {
@@ -96,6 +97,20 @@ export class StudentService {
     async getStudentMarks(userId: string, lessonId: string) {
         const statementId = this.statementService.getByUserIdAndLessonId(userId, lessonId);
         return this.markService.getAllById((await statementId).id);
+    }
+
+    async getAverageMark(userId: string, lessonId: string) {
+        function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+        const statementId = await this.statementService.getByUserIdAndLessonId(userId, lessonId);
+        const marks = await this.markService.getAllById(statementId.id);
+        const filtered = marks.filter((elem) => {
+            const isNum = isNumeric(elem.mark);
+            console.log(isNum);
+            return isNum;
+        });
+        return filtered.reduce((acc, elem) => acc + +elem.mark, 0) / marks.length;
     }
 
     async leaveFromOrganization(id: string, myId: string) {
