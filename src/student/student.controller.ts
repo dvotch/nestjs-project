@@ -43,6 +43,13 @@ export class StudentController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
+    @Get('/mark/:lesson')
+    async getAverageMark(@CurrentUser() user: JwtPayload, @Param('lesson') lessonId: string) {
+        return this.studentService.getAverageMark(user.id, lessonId);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
     @Get('/credits')
     getMyCredits(@CurrentUser() user: JwtPayload) {
         return this.studentService.getMyCredits(user.id);

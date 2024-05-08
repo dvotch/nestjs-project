@@ -98,6 +98,12 @@ export class StudentService {
         return this.markService.getAllById((await statementId).id);
     }
 
+    async getAverageMark(userId: string, lessonId: string) {
+        const statementId = await this.statementService.getByUserIdAndLessonId(userId, lessonId);
+        const marks = await this.markService.getAllById(statementId.id);
+        return marks.reduce((acc, elem) => acc + +elem.mark, 0) / marks.length;
+    }
+
     async leaveFromOrganization(id: string, myId: string) {
         const userOrganization = await this.prismaService.usersOrganization.findFirstOrThrow({
             where: { id, userId: myId },
