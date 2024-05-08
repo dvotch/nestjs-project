@@ -14,6 +14,7 @@ import { LessonModule } from './lesson/lesson.module';
 import { CreditModule } from './credit/credit.module';
 import { StudentModule } from './student/student.module';
 import { AdmModule } from './adm/adm.module';
+import { endMarkModule } from './endMark/endMark.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { AdmModule } from './adm/adm.module';
         CreditModule,
         StudentModule,
         AdmModule,
+        endMarkModule,
     ],
     providers: [
         {
