@@ -133,10 +133,10 @@ model Marks{
 
 model EndMark{
   id    String    @id @default(uuid())
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  lesson Lessons @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  lessonId String
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+  lesson Lessons? @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId String?
   endMark String
   
   @@map("endMark")
