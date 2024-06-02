@@ -77,7 +77,7 @@ export class StudentController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles(Role.STUDENT)
+    @Roles(Role.STUDENT, Role.TEACHER)
     @Get('/portfolio')
     getMyPortfolio(@CurrentUser() user: JwtPayload, @Query('page') page: string) {
         return this.studentService.getMyPortfolio(user.id, page);
