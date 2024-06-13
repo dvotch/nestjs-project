@@ -110,7 +110,7 @@ export class StudentService {
             console.log(isNum);
             return isNum;
         });
-        return filtered.reduce((acc, elem) => acc + +elem.mark, 0) / marks.length;
+        return filtered.reduce((acc, elem) => acc + +elem.mark, 0) / filtered.length;
     }
 
     async leaveFromOrganization(id: string, myId: string) {
