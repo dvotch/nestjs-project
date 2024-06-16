@@ -65,7 +65,7 @@ export class AdmController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.RESOURCES_DEPARTMENT)
-    @Delete('/future/:id')
+    @Delete('/organization/:id')
     deleteOrg(@Param('id') id: string) {
         return this.admService.deleteOrganization(id);
     }
