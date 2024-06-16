@@ -22,7 +22,7 @@ export class AdmService {
         const work = dto.work.toString() === 'true' ? true : false;
 
         return this.prismaService.future.create({
-            data: { ...dto, photo: photo.buffer, work: work, cost: +dto.cost },
+            data: { ...dto, photo: photo?.buffer || Buffer.from(''), work: work, cost: +dto.cost },
         });
     }
 

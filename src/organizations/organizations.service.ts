@@ -17,7 +17,7 @@ export class OrganizationsService {
             data: {
                 name: dto.name,
                 description: dto.description,
-                logo: logo?.buffer || Buffer.from(''),
+                logo: logo.buffer,
             },
         });
     }
