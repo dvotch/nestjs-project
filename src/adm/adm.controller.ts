@@ -62,4 +62,11 @@ export class AdmController {
     deleteFuture(@Param('id') id: string) {
         return this.admService.deleteFuture(id);
     }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.RESOURCES_DEPARTMENT)
+    @Delete('/future/:id')
+    deleteOrg(@Param('id') id: string) {
+        return this.admService.deleteOrganization(id);
+    }
 }

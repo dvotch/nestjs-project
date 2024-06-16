@@ -33,4 +33,8 @@ export class AdmService {
     getAllFutures() {
         return this.prismaService.future.findMany();
     }
+
+    deleteOrganization(id: string) {
+        return this.prismaService.usersOrganization.delete({ where: { id } });
+    }
 }
