@@ -139,4 +139,11 @@ export class StudentService {
 
         return { works, learns };
     }
+
+    async getAvailableOrganizations(id: string) {
+        const already = await this.prismaService.usersOrganization.findMany({ where: { userId: id } });
+        const organizations = await this.prismaService.organizations.findMany();
+        const res = organizations.filter((x) => !already.some((y) => x.id === y.organizationId));
+        return res;
+    }
 }

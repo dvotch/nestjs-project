@@ -64,6 +64,13 @@ export class StudentController {
 
     @UseGuards(RolesGuard)
     @Roles(Role.STUDENT)
+    @Get('/organizations')
+    getAvailableOrganizations(@CurrentUser() user: JwtPayload) {
+        return this.studentService.getAvailableOrganizations(user.id);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(Role.STUDENT)
     @Post('/organization')
     sendApplication(@CurrentUser() user: JwtPayload, @Body() dto: PostOrganizationDto) {
         return this.studentService.sendApplication(user.id, dto);
